@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { GraduationCap, BookOpen, Award, Clock, Globe, CheckCircle, ArrowRight, TrendingUp } from "lucide-react";
 
@@ -147,7 +147,7 @@ export default function Study() {
                   ))}
                 </ul>
                 <Button variant="accent" asChild className="w-full">
-                  <Link to="/contact">
+                  <Link href="/contact">
                     Enquire Now
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
@@ -200,13 +200,13 @@ export default function Study() {
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <Button variant="hero" size="lg" asChild>
-                <Link to="/contact">
+                <Link href="/contact">
                   Get Pricing Details
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
               <Button variant="hero-outline" size="lg" asChild>
-                <Link to="/services">View Our Support Services</Link>
+                <Link href="/services">View Our Support Services</Link>
               </Button>
             </div>
           </div>

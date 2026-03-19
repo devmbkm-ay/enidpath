@@ -1,4 +1,7 @@
-import { Link, useLocation } from "react-router-dom";
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Menu, X, Phone, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -15,7 +18,7 @@ const navigation = [
 ];
 
 export function Header() {
-  const location = useLocation();
+  const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
@@ -44,7 +47,7 @@ export function Header() {
       <nav className="container">
         <div className="flex items-center justify-between py-4">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3">
+          <Link href="/" className="flex items-center gap-3">
             <div className="w-12 h-12 rounded-lg bg-primary flex items-center justify-center">
               <span className="text-primary-foreground font-display font-bold text-xl">EP</span>
             </div>
@@ -59,10 +62,10 @@ export function Header() {
             {navigation.map((item) => (
               <Link
                 key={item.name}
-                to={item.href}
+                href={item.href}
                 className={cn(
                   "px-4 py-2 text-sm font-medium transition-colors rounded-md",
-                  location.pathname === item.href
+                  pathname === item.href
                     ? "text-secondary bg-secondary/10"
                     : "text-foreground hover:text-secondary hover:bg-muted"
                 )}
@@ -75,7 +78,7 @@ export function Header() {
           {/* CTA Button */}
           <div className="hidden lg:block">
             <Button variant="accent" asChild>
-              <Link to="/contact">Start Your Journey</Link>
+              <Link href="/contact">Start Your Journey</Link>
             </Button>
           </div>
 
@@ -95,11 +98,11 @@ export function Header() {
               {navigation.map((item) => (
                 <Link
                   key={item.name}
-                  to={item.href}
+                  href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
                   className={cn(
                     "px-4 py-3 text-sm font-medium transition-colors rounded-md",
-                    location.pathname === item.href
+                    pathname === item.href
                       ? "text-secondary bg-secondary/10"
                       : "text-foreground hover:text-secondary hover:bg-muted"
                   )}
@@ -109,7 +112,7 @@ export function Header() {
               ))}
               <div className="pt-4 px-4">
                 <Button variant="accent" className="w-full" asChild>
-                  <Link to="/contact">Start Your Journey</Link>
+                  <Link href="/contact">Start Your Journey</Link>
                 </Button>
               </div>
             </div>

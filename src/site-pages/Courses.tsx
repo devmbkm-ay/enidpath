@@ -1,3 +1,6 @@
+"use client";
+
+import Link from "next/link";
 import { useState } from "react";
 import { BookOpen, GraduationCap, Filter } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -163,7 +166,7 @@ const Courses = () => {
             Get personalised guidance from EnidPath International.
           </p>
           <Button variant="accent" size="lg" asChild>
-            <a href="/contact">Contact Our Team</a>
+            <Link href="/contact">Contact Our Team</Link>
           </Button>
         </div>
       </section>

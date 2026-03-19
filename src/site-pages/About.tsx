@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Target, Eye, Heart, Shield, Users, Lightbulb, Globe, ArrowRight } from "lucide-react";
 
@@ -147,7 +147,7 @@ export default function About() {
               As an authorised partner of Online Business School (UK), we bridge the gap between aspiring students and quality UK education. Our partnership ensures that students receive proper guidance while accessing accredited programmes delivered by OBS.
             </p>
             <Button variant="accent" size="lg" asChild>
-              <Link to="/contact">
+              <Link href="/contact">
                 Start Your Journey
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>

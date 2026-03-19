@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { Mail, Phone, MapPin, ExternalLink } from "lucide-react";
 
 const footerLinks = {
@@ -46,7 +46,7 @@ export function Footer() {
               {footerLinks.quickLinks.map((link) => (
                 <li key={link.name}>
                   <Link
-                    to={link.href}
+                    href={link.href}
                     className="text-sm opacity-80 hover:opacity-100 hover:text-accent transition-all"
                   >
                     {link.name}
@@ -63,7 +63,7 @@ export function Footer() {
               {footerLinks.resources.map((link) => (
                 <li key={link.name}>
                   <Link
-                    to={link.href}
+                    href={link.href}
                     className="text-sm opacity-80 hover:opacity-100 hover:text-accent transition-all"
                   >
                     {link.name}

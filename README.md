@@ -49,11 +49,13 @@ npm run dev
 
 This project is built with:
 
-- Vite
+- Next.js
 - TypeScript
 - React
 - shadcn-ui
 - Tailwind CSS
+- Prisma
+- PostgreSQL
 
 ## Local Postgres
 
@@ -100,13 +102,19 @@ cp .env.example .env
 docker compose up -d
 ```
 
-3. Generate the Prisma client:
+3. Start the Next.js development server:
+
+```sh
+npm run dev
+```
+
+4. Generate the Prisma client:
 
 ```sh
 npm run prisma:generate
 ```
 
-4. After you add your first model in `prisma/schema.prisma`, create a local
+5. After you add your first model in `prisma/schema.prisma`, create a local
 migration:
 
 ```sh
@@ -120,7 +128,7 @@ npm run prisma:studio
 npm run prisma:push
 ```
 
-Prisma should be used from server-side code only. This Vite app should not
+Prisma should be used from server-side code only. This Next.js app should not
 connect directly to Postgres from the browser.
 
 Note: Prisma 7 reads the database connection from `prisma.config.ts`, which in

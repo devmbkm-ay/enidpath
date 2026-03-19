@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Shield, Award, Users, Globe, Clock, CreditCard, HeadphonesIcon, CheckCircle, ArrowRight, Star } from "lucide-react";
 
@@ -163,7 +163,7 @@ export default function WhyChoose() {
               Join the students who have trusted EnidPath International to guide them toward their educational goals.
             </p>
             <Button variant="hero" size="lg" asChild>
-              <Link to="/contact">
+              <Link href="/contact">
                 Contact Us Now
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>

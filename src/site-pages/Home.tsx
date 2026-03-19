@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, Users, BookOpen, Award, GraduationCap, Globe, Shield, ArrowRight, Phone, Star } from "lucide-react";
 import hero from "@/assets/hero-2.webp";
@@ -42,7 +42,7 @@ export default function Home() {
       <section className="relative min-h-[85vh] flex items-center">
         <div
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${hero})` }}
+          style={{ backgroundImage: `url(${hero.src})` }}
         >
           <div className="absolute inset-0 gradient-overlay" />
         </div>
@@ -65,13 +65,13 @@ export default function Home() {
 
             <div className="flex flex-col sm:flex-row gap-4 mb-12">
               <Button variant="hero" size="lg" asChild>
-                <Link to="/contact">
+                <Link href="/contact">
                   Get Started Today
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
               <Button variant="hero-outline" size="lg" asChild>
-                <Link to="/study">Explore Programmes</Link>
+                <Link href="/study">Explore Programmes</Link>
               </Button>
             </div>
 
@@ -181,13 +181,13 @@ export default function Home() {
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <Button variant="hero" size="lg" asChild>
-                <Link to="/contact">
+                <Link href="/contact">
                   <Phone className="mr-2 h-5 w-5" />
                   Contact Us Now
                 </Link>
               </Button>
               <Button variant="hero-outline" size="lg" asChild>
-                <Link to="/services">View Our Services</Link>
+                <Link href="/services">View Our Services</Link>
               </Button>
             </div>
           </div>

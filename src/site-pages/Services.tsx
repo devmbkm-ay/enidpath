@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { MessageCircle, GraduationCap, CreditCard, FileText, UserCheck, HeadphonesIcon, ArrowRight, CheckCircle } from "lucide-react";
 
@@ -190,7 +190,7 @@ export default function Services() {
               Contact us today to learn more about our services and how we can support your educational journey.
             </p>
             <Button variant="hero" size="lg" asChild>
-              <Link to="/contact">
+              <Link href="/contact">
                 Contact Us Today
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
