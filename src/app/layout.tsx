@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import "../index.css";
-import { Layout as SiteLayout } from "@/components/Layout";
-import { Providers } from "@/components/Providers";
 
 export const metadata: Metadata = {
   title: "EnidPath International | UK Higher Education Partner",
@@ -30,9 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-        <Providers>
-          <SiteLayout>{children}</SiteLayout>
-        </Providers>
+        {children}
       </body>
     </html>
   );
