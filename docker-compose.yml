@@ -17,5 +17,15 @@ services:
       timeout: 5s
       retries: 5
 
+  mongodb:
+    image: mongo:latest
+    container_name: enidpath-mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb-data:/data/db
+
 volumes:
   postgres-data:
+  mongodb-data:
