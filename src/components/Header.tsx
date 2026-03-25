@@ -17,21 +17,21 @@ export function Header({ siteSettings = defaultSiteSettings }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 bg-card shadow-soft">
+    <header className="sticky top-0 z-50 bg-card/90 shadow-soft backdrop-blur-md">
       {/* Top bar */}
       <div className="bg-primary text-primary-foreground">
         <div className="container flex items-center justify-between py-2 text-sm">
           <div className="flex items-center gap-6">
             <a
               href={`tel:${siteSettings.contactPhone}`}
-              className="flex items-center gap-2 hover:text-accent transition-colors"
+              className="motion-link flex items-center gap-2 hover:text-accent transition-colors"
             >
               <Phone className="h-4 w-4" />
               <span className="hidden sm:inline">{siteSettings.contactPhone}</span>
             </a>
             <a
               href={`mailto:${siteSettings.contactEmail}`}
-              className="flex items-center gap-2 hover:text-accent transition-colors"
+              className="motion-link flex items-center gap-2 hover:text-accent transition-colors"
             >
               <Mail className="h-4 w-4" />
               <span className="hidden sm:inline">{siteSettings.contactEmail}</span>
@@ -48,8 +48,8 @@ export function Header({ siteSettings = defaultSiteSettings }: HeaderProps) {
       <nav className="container">
         <div className="flex items-center justify-between py-4">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-lg bg-primary flex items-center justify-center">
+          <Link href="/" className="motion-link flex items-center gap-3">
+            <div className="motion-chip flex h-12 w-12 items-center justify-center rounded-lg bg-primary">
               <span className="text-primary-foreground font-display font-bold text-xl">EP</span>
             </div>
             <div>
@@ -70,7 +70,7 @@ export function Header({ siteSettings = defaultSiteSettings }: HeaderProps) {
                   "px-4 py-2 text-sm font-medium transition-colors rounded-md",
                   pathname === item.href
                     ? "text-secondary bg-secondary/10"
-                    : "text-foreground hover:text-secondary hover:bg-muted"
+                    : "motion-link text-foreground hover:text-secondary hover:bg-muted"
                 )}
               >
                 {item.label}
@@ -87,7 +87,7 @@ export function Header({ siteSettings = defaultSiteSettings }: HeaderProps) {
 
           {/* Mobile menu button */}
           <button
-            className="lg:hidden p-2 rounded-md hover:bg-muted transition-colors"
+            className="motion-chip lg:hidden rounded-md p-2 hover:bg-muted transition-colors"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}

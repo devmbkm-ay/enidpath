@@ -13,6 +13,7 @@ import {
   Star,
   Users,
 } from "lucide-react";
+import { Reveal } from "@/components/motion/Reveal";
 import { Button } from "@/components/ui/button";
 import { resolveSiteIcon } from "@/lib/site-icons";
 import { useLivePreviewPageData } from "@/components/LivePreviewProvider";
@@ -137,14 +138,14 @@ export default function WhyChooseClient({
     <div>
       <section className="bg-primary py-20">
         <div className="container">
-          <div className="max-w-3xl">
+          <Reveal className="max-w-3xl">
             <h1 className="text-4xl md:text-5xl font-display font-bold text-primary-foreground mb-6">
               {pageData.heroTitle || defaultWhyChooseContent.heroTitle}
             </h1>
             <p className="text-xl text-primary-foreground/90 leading-relaxed">
               {pageData.heroSubtitle || defaultWhyChooseContent.heroSubtitle}
             </p>
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -156,9 +157,10 @@ export default function WhyChooseClient({
               const Icon = resolveSiteIcon(reason.icon ?? reason.iconName, fallbackIcon);
 
               return (
-                <div
+                <Reveal
                   key={reason.id ?? reason.title}
-                  className="bg-card p-8 rounded-lg card-shadow hover:shadow-lg transition-shadow duration-300"
+                  delay={index * 70}
+                  className="motion-card bg-card p-8 rounded-lg card-shadow"
                 >
                   <div className="w-14 h-14 rounded-lg bg-secondary/10 flex items-center justify-center mb-6">
                     <Icon className="h-7 w-7 text-secondary" />
@@ -167,7 +169,7 @@ export default function WhyChooseClient({
                     {reason.title}
                   </h3>
                   <p className="text-muted-foreground leading-relaxed">{reason.description}</p>
-                </div>
+                </Reveal>
               );
             })}
           </div>
@@ -177,7 +179,8 @@ export default function WhyChooseClient({
       <section className="py-20 bg-muted">
         <div className="container">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div>
+            <Reveal>
+              <div>
               <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-6">
                 {pageData.expectationsTitle}
               </h2>
@@ -192,8 +195,9 @@ export default function WhyChooseClient({
                   </div>
                 ))}
               </div>
-            </div>
-            <div className="bg-card p-8 rounded-lg card-shadow">
+              </div>
+            </Reveal>
+            <Reveal delay={110} className="motion-card bg-card p-8 rounded-lg card-shadow">
               <div className="flex items-center gap-2 mb-6">
                 {[1, 2, 3, 4, 5].map((star) => (
                   <Star key={star} className="h-6 w-6 text-accent fill-accent" />
@@ -206,14 +210,14 @@ export default function WhyChooseClient({
                 <p className="font-semibold text-foreground">— {pageData.testimonialAuthor}</p>
                 <p className="text-sm text-muted-foreground">{pageData.testimonialRole}</p>
               </div>
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>
 
       <section className="py-20 bg-background">
         <div className="container">
-          <div className="max-w-3xl mx-auto text-center">
+          <Reveal className="mx-auto max-w-3xl text-center">
             <Users className="h-16 w-16 text-secondary mx-auto mb-6" />
             <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-6">
               {pageData.commitmentTitle}
@@ -223,22 +227,23 @@ export default function WhyChooseClient({
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               {pageData.commitmentBadges.map((badge, index) => (
-                <div
+                <Reveal
                   key={badge.id ?? `${badge.text}-${index}`}
-                  className="flex items-center gap-2 bg-muted px-4 py-2 rounded-full"
+                  delay={index * 60}
+                  className="motion-chip flex items-center gap-2 rounded-full bg-muted px-4 py-2"
                 >
                   <CheckCircle className="h-5 w-5 text-green-600" />
                   <span className="text-sm font-medium">{badge.text}</span>
-                </div>
+                </Reveal>
               ))}
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
 
       <section className="py-20 bg-primary">
         <div className="container">
-          <div className="max-w-3xl mx-auto text-center">
+          <Reveal className="mx-auto max-w-3xl text-center">
             <h2 className="text-3xl md:text-4xl font-display font-bold text-primary-foreground mb-4">
               {pageData.ctaTitle}
             </h2>
@@ -249,7 +254,7 @@ export default function WhyChooseClient({
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
-          </div>
+          </Reveal>
         </div>
       </section>
     </div>

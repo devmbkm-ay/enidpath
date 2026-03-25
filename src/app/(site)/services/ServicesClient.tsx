@@ -11,6 +11,7 @@ import {
   MessageCircle,
   UserCheck,
 } from "lucide-react";
+import { Reveal } from "@/components/motion/Reveal";
 import { Button } from "@/components/ui/button";
 import { resolveSiteIcon } from "@/lib/site-icons";
 import { useLivePreviewPageData } from "@/components/LivePreviewProvider";
@@ -163,14 +164,14 @@ export default function ServicesClient({
     <div>
       <section className="bg-primary py-20">
         <div className="container">
-          <div className="max-w-3xl">
+          <Reveal className="max-w-3xl">
             <h1 className="text-4xl md:text-5xl font-display font-bold text-primary-foreground mb-6">
               {pageData.heroTitle || defaultServicesContent.heroTitle}
             </h1>
             <p className="text-xl text-primary-foreground/90 leading-relaxed">
               {pageData.heroSubtitle || defaultServicesContent.heroSubtitle}
             </p>
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -187,12 +188,12 @@ export default function ServicesClient({
 
       <section className="py-20 bg-background">
         <div className="container">
-          <div className="text-center max-w-2xl mx-auto mb-16">
+          <Reveal className="mx-auto mb-16 max-w-2xl text-center">
             <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4">
               {pageData.servicesSectionTitle}
             </h2>
             <p className="text-muted-foreground text-lg">{pageData.servicesSectionSubtitle}</p>
-          </div>
+          </Reveal>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {pageData.serviceCards.map((service, index) => {
@@ -200,9 +201,10 @@ export default function ServicesClient({
               const Icon = resolveSiteIcon(service.icon ?? service.iconName, fallbackIcon);
 
               return (
-                <div
+                <Reveal
                   key={service.id ?? service.title}
-                  className="bg-card p-8 rounded-lg card-shadow hover:shadow-lg transition-shadow duration-300"
+                  delay={index * 70}
+                  className="motion-card bg-card p-8 rounded-lg card-shadow"
                 >
                   <div className="w-14 h-14 rounded-lg bg-secondary/10 flex items-center justify-center mb-6">
                     <Icon className="h-7 w-7 text-secondary" />
@@ -222,7 +224,7 @@ export default function ServicesClient({
                       </li>
                     ))}
                   </ul>
-                </div>
+                </Reveal>
               );
             })}
           </div>
@@ -231,16 +233,16 @@ export default function ServicesClient({
 
       <section className="py-20 bg-muted">
         <div className="container">
-          <div className="text-center max-w-2xl mx-auto mb-16">
+          <Reveal className="mx-auto mb-16 max-w-2xl text-center">
             <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4">
               {pageData.processSectionTitle}
             </h2>
             <p className="text-muted-foreground text-lg">{pageData.processSectionSubtitle}</p>
-          </div>
+          </Reveal>
 
           <div className="grid md:grid-cols-4 gap-8">
             {pageData.processSteps.map((item, index) => (
-              <div key={item.step} className="relative text-center">
+              <Reveal key={item.step} delay={index * 80} className="relative text-center">
                 <div className="w-16 h-16 rounded-full bg-secondary text-secondary-foreground flex items-center justify-center mx-auto mb-6 font-display font-bold text-xl">
                   {item.step}
                 </div>
@@ -251,7 +253,7 @@ export default function ServicesClient({
                 {index < 3 && (
                   <div className="hidden md:block absolute top-8 left-[60%] w-[80%] border-t-2 border-dashed border-border" />
                 )}
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -259,7 +261,7 @@ export default function ServicesClient({
 
       <section className="py-20 bg-primary">
         <div className="container">
-          <div className="max-w-3xl mx-auto text-center">
+          <Reveal className="mx-auto max-w-3xl text-center">
             <h2 className="text-3xl md:text-4xl font-display font-bold text-primary-foreground mb-4">
               {pageData.ctaTitle}
             </h2>
@@ -270,7 +272,7 @@ export default function ServicesClient({
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
-          </div>
+          </Reveal>
         </div>
       </section>
     </div>

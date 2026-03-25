@@ -15,8 +15,8 @@ export function Footer({ siteSettings = defaultSiteSettings }: FooterProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Brand */}
           <div className="lg:col-span-1">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 rounded-lg bg-primary-foreground/10 flex items-center justify-center border border-primary-foreground/20">
+            <div className="mb-6 flex items-center gap-3">
+              <div className="motion-chip flex h-12 w-12 items-center justify-center rounded-lg border border-primary-foreground/20 bg-primary-foreground/10">
                 <span className="text-primary-foreground font-display font-bold text-xl">EP</span>
               </div>
               <div>
@@ -41,7 +41,7 @@ export function Footer({ siteSettings = defaultSiteSettings }: FooterProps) {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-sm opacity-80 hover:opacity-100 hover:text-accent transition-all"
+                    className="motion-link text-sm opacity-80 hover:opacity-100 hover:text-accent transition-all"
                   >
                     {link.label}
                   </Link>
@@ -58,7 +58,7 @@ export function Footer({ siteSettings = defaultSiteSettings }: FooterProps) {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-sm opacity-80 hover:opacity-100 hover:text-accent transition-all"
+                    className="motion-link text-sm opacity-80 hover:opacity-100 hover:text-accent transition-all"
                   >
                     {link.label}
                   </Link>
@@ -69,7 +69,7 @@ export function Footer({ siteSettings = defaultSiteSettings }: FooterProps) {
                   href={siteSettings.footerExternalHref}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm opacity-80 hover:opacity-100 hover:text-accent transition-all inline-flex items-center gap-1"
+                  className="motion-link inline-flex items-center gap-1 text-sm opacity-80 transition-all hover:opacity-100 hover:text-accent"
                 >
                   {siteSettings.footerExternalLabel}
                   <ExternalLink className="h-3 w-3" />
@@ -90,13 +90,13 @@ export function Footer({ siteSettings = defaultSiteSettings }: FooterProps) {
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="h-5 w-5 opacity-60 flex-shrink-0" />
-                <a href={`tel:${siteSettings.contactPhone}`} className="text-sm opacity-80 hover:opacity-100 hover:text-accent transition-all">
+                <a href={`tel:${siteSettings.contactPhone}`} className="motion-link text-sm opacity-80 hover:opacity-100 hover:text-accent transition-all">
                   {siteSettings.contactPhone}
                 </a>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="h-5 w-5 opacity-60 flex-shrink-0" />
-                <a href={`mailto:${siteSettings.contactEmail}`} className="text-sm opacity-80 hover:opacity-100 hover:text-accent transition-all">
+                <a href={`mailto:${siteSettings.contactEmail}`} className="motion-link text-sm opacity-80 hover:opacity-100 hover:text-accent transition-all">
                   {siteSettings.contactEmail}
                 </a>
               </li>

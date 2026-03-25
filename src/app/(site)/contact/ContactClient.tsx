@@ -11,6 +11,7 @@ import {
   Send,
 } from "lucide-react";
 import { toast } from "sonner";
+import { Reveal } from "@/components/motion/Reveal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -127,21 +128,22 @@ export default function ContactClient({
     <div>
       <section className="bg-primary py-20">
         <div className="container">
-          <div className="max-w-3xl">
+          <Reveal className="max-w-3xl">
             <h1 className="mb-6 text-4xl font-display font-bold text-primary-foreground md:text-5xl">
               {livePageData.heroTitle || defaultContactContent.heroTitle}
             </h1>
             <p className="text-xl leading-relaxed text-primary-foreground/90">
               {livePageData.heroSubtitle || defaultContactContent.heroSubtitle}
             </p>
-          </div>
+          </Reveal>
         </div>
       </section>
 
       <section className="bg-background py-20">
         <div className="container">
           <div className="grid gap-16 lg:grid-cols-2">
-            <div>
+            <Reveal className="motion-card rounded-2xl bg-card/60 p-8 shadow-sm">
+              <div>
               <h2 className="mb-2 text-2xl font-display font-bold text-foreground">
                 {livePageData.formTitle || defaultContactContent.formTitle}
               </h2>
@@ -224,9 +226,11 @@ export default function ContactClient({
                   )}
                 </Button>
               </form>
-            </div>
+              </div>
+            </Reveal>
 
-            <div>
+            <Reveal delay={100}>
+              <div>
               <h2 className="mb-2 text-2xl font-display font-bold text-foreground">
                 {livePageData.contactInfoTitle || defaultContactContent.contactInfoTitle}
               </h2>
@@ -236,8 +240,12 @@ export default function ContactClient({
               </p>
 
               <div className="space-y-6">
-                {contactInfo.map((info) => (
-                  <div key={info.title} className="flex gap-4 rounded-lg bg-muted p-6">
+                {contactInfo.map((info, index) => (
+                  <Reveal
+                    key={info.title}
+                    delay={index * 70}
+                    className="motion-card flex gap-4 rounded-lg bg-muted p-6"
+                  >
                     <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-secondary/10">
                       <info.icon className="h-6 w-6 text-secondary" />
                     </div>
@@ -252,11 +260,11 @@ export default function ContactClient({
                         {info.description}
                       </p>
                     </div>
-                  </div>
+                  </Reveal>
                 ))}
               </div>
 
-              <div className="mt-8 rounded-lg border border-green-200 bg-green-50 p-6">
+              <div className="motion-card mt-8 rounded-lg border border-green-200 bg-green-50 p-6">
                 <div className="flex items-start gap-4">
                   <MessageCircle className="h-8 w-8 flex-shrink-0 text-green-600" />
                   <div>
@@ -278,7 +286,8 @@ export default function ContactClient({
                   </div>
                 </div>
               </div>
-            </div>
+              </div>
+            </Reveal>
           </div>
         </div>
       </section>

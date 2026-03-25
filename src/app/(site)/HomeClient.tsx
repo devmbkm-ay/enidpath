@@ -14,6 +14,7 @@ import {
   Users,
 } from "lucide-react";
 import defaultHero from "@/assets/hero-2.webp";
+import { Reveal } from "@/components/motion/Reveal";
 import { Button } from "@/components/ui/button";
 import { resolveSiteIcon } from "@/lib/site-icons";
 import { useLivePreviewGlobalData } from "@/components/LivePreviewProvider";
@@ -145,32 +146,39 @@ export default function HomeClient({
 
   return (
     <div>
-      <section className="relative min-h-[85vh] flex items-center">
+      <section className="relative flex min-h-[85vh] items-center overflow-hidden">
+        <div className="hero-orb hero-orb--gold left-[8%] top-[14%] h-40 w-40 md:h-56 md:w-56" />
+        <div className="hero-orb hero-orb--blue bottom-[8%] right-[10%] h-52 w-52 md:h-72 md:w-72" />
         <div
-          className="absolute inset-0 bg-cover bg-center"
+          className="absolute inset-0 bg-cover bg-center scale-[1.03]"
           style={{ backgroundImage: `url(${heroImageUrl})` }}
         >
           <div className="absolute inset-0 gradient-overlay" />
         </div>
 
         <div className="container relative z-10 py-20">
-          <div className="max-w-3xl animate-fade-in-up">
-            <div className="inline-flex items-center gap-2 bg-accent/20 border border-accent/30 rounded-full px-4 py-2 mb-8">
+          <div className="hero-sheen max-w-3xl rounded-[2rem] border border-white/10 bg-white/5 p-8 backdrop-blur-[2px] md:p-10 animate-fade-in-up">
+            <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/20 px-4 py-2 motion-chip">
               <Star className="h-4 w-4 text-accent" />
               <span className="text-sm font-medium text-primary-foreground">
                 Authorised Partner of Online Business School (UK)
               </span>
             </div>
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-primary-foreground mb-6 leading-tight">
-              {data.heroTitle}
-            </h1>
+            <Reveal>
+              <h1 className="mb-6 text-4xl font-display font-bold leading-tight text-primary-foreground md:text-5xl lg:text-6xl">
+                {data.heroTitle}
+              </h1>
+            </Reveal>
 
-            <p className="text-lg md:text-xl text-primary-foreground/90 mb-8 max-w-2xl leading-relaxed">
-              {data.heroSubtitle}
-            </p>
+            <Reveal delay={80}>
+              <p className="mb-8 max-w-2xl text-lg leading-relaxed text-primary-foreground/90 md:text-xl">
+                {data.heroSubtitle}
+              </p>
+            </Reveal>
 
-            <div className="flex flex-col sm:flex-row gap-4 mb-12">
+            <Reveal delay={140}>
+              <div className="mb-12 flex flex-col gap-4 sm:flex-row">
               <Button variant="hero" size="lg" asChild>
                 <Link href="/contact">
                   Get Started Today
@@ -180,7 +188,8 @@ export default function HomeClient({
               <Button variant="hero-outline" size="lg" asChild>
                 <Link href="/study">Explore Programmes</Link>
               </Button>
-            </div>
+              </div>
+            </Reveal>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {data.trustIndicators.map((item, index) => {
@@ -188,14 +197,14 @@ export default function HomeClient({
                 const Icon = resolveSiteIcon((item as { icon?: string }).icon, fallbackIcon);
 
                 return (
-                  <div
+                  <Reveal
                     key={item.id ?? `${item.text}-${index}`}
-                    className="flex items-center gap-3 text-primary-foreground/90 animate-fade-in"
-                    style={{ animationDelay: `${0.2 + index * 0.1}s` }}
+                    delay={220 + index * 70}
+                    className="flex items-center gap-3 text-primary-foreground/90"
                   >
                     <Icon className="h-5 w-5 text-accent flex-shrink-0" />
                     <span className="text-sm">{item.text}</span>
-                  </div>
+                  </Reveal>
                 );
               })}
             </div>
@@ -207,7 +216,11 @@ export default function HomeClient({
         <div className="container">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {data.stats.map((stat, index) => (
-              <div key={stat.id ?? `${stat.label ?? "stat"}-${index}`} className="text-center">
+              <Reveal
+                key={stat.id ?? `${stat.label ?? "stat"}-${index}`}
+                delay={index * 70}
+                className="text-center"
+              >
                 {stat.sublabel && (
                   <div className="text-sm text-primary-foreground/60">{stat.sublabel}</div>
                 )}
@@ -215,7 +228,7 @@ export default function HomeClient({
                   {stat.value}
                 </div>
                 <div className="text-sm text-primary-foreground/80">{stat.label}</div>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -223,18 +236,19 @@ export default function HomeClient({
 
       <section className="py-20 bg-background">
         <div className="container">
-          <div className="text-center max-w-2xl mx-auto mb-16">
+          <Reveal className="mx-auto mb-16 max-w-2xl text-center">
             <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4">
               {data.featuresSectionTitle}
             </h2>
             <p className="text-muted-foreground text-lg">{data.featuresSectionSubtitle}</p>
-          </div>
+          </Reveal>
 
           <div className="grid md:grid-cols-3 gap-8">
             {data.features.map((feature, index) => (
-              <div
+              <Reveal
                 key={feature.id ?? `${feature.title ?? "feature"}-${index}`}
-                className="bg-card p-8 rounded-lg card-shadow hover:shadow-lg transition-shadow duration-300"
+                delay={index * 90}
+                className="motion-card bg-card p-8 rounded-lg card-shadow"
               >
                 <div className="w-14 h-14 rounded-lg bg-secondary/10 flex items-center justify-center mb-6">
                   {(() => {
@@ -248,7 +262,7 @@ export default function HomeClient({
                   {feature.title}
                 </h3>
                 <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -256,7 +270,7 @@ export default function HomeClient({
 
       <section className="bg-muted py-16">
         <div className="container">
-          <div className="max-w-4xl mx-auto text-center">
+          <Reveal className="mx-auto max-w-4xl text-center">
             <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground mb-4">
               {data.partnershipTitle}
             </h2>
@@ -265,22 +279,23 @@ export default function HomeClient({
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               {data.partnershipBadges.map((badge, index) => (
-                <div
+                <Reveal
                   key={badge.id ?? `${badge.text}-${index}`}
-                  className="flex items-center gap-2 bg-card px-4 py-2 rounded-full"
+                  delay={index * 70}
+                  className="motion-chip flex items-center gap-2 rounded-full bg-card px-4 py-2"
                 >
                   <CheckCircle className="h-5 w-5 text-green-600" />
                   <span className="text-sm font-medium">{badge.text}</span>
-                </div>
+                </Reveal>
               ))}
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
 
       <section className="bg-primary py-20">
         <div className="container">
-          <div className="max-w-3xl mx-auto text-center">
+          <Reveal className="mx-auto max-w-3xl text-center">
             <h2 className="text-3xl md:text-4xl font-display font-bold text-primary-foreground mb-4">
               {data.ctaTitle}
             </h2>
@@ -298,7 +313,7 @@ export default function HomeClient({
                 </Button>
               )}
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
     </div>
