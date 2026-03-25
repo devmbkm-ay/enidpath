@@ -130,6 +130,8 @@ export interface UserAuthOperations {
   };
 }
 /**
+ * Manage admin accounts and login access for the CMS.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "Users".
  */
@@ -155,11 +157,16 @@ export interface User {
   collection: 'Users';
 }
 /**
+ * Upload and organise website images before using them on pages.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "Media".
  */
 export interface Media {
   id: string;
+  /**
+   * Describe the image for accessibility and SEO.
+   */
   alt: string;
   updatedAt: string;
   createdAt: string;
@@ -174,26 +181,51 @@ export interface Media {
   focalY?: number | null;
 }
 /**
+ * Manage the course catalogue shown on the Courses page.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "CourseItems".
  */
 export interface CourseItem {
   id: string;
+  /**
+   * This is the course title shown on the public website.
+   */
   name: string;
+  /**
+   * Choose the academic level used for filtering on the Courses page.
+   */
   level: 'IGCSE' | 'IELTS' | 'Level 3' | 'Level 4' | 'Level 5' | 'Level 4 & 5' | 'Level 6' | 'Level 7';
+  /**
+   * Optional: add a short credits label such as 60 Credits.
+   */
   credits?: string | null;
   updatedAt: string;
   createdAt: string;
 }
 /**
+ * Manage the study programme cards shown on the Study page.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "Programmes".
  */
 export interface Programme {
   id: string;
+  /**
+   * Select the programme type shown on the public Study page.
+   */
   level: 'BA Pathway' | 'MBA Pathway';
+  /**
+   * This is the main programme title shown to visitors.
+   */
   title: string;
+  /**
+   * A short paragraph that explains the programme.
+   */
   description: string;
+  /**
+   * Add the bullet points shown inside each programme card.
+   */
   features?:
     | {
         feature?: string | null;
@@ -204,15 +236,32 @@ export interface Programme {
   createdAt: string;
 }
 /**
+ * Edit the main website pages such as About, Services, Contact, Courses, and Study.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "Pages".
  */
 export interface Page {
   id: string;
+  /**
+   * Internal page name for editors.
+   */
   title: string;
+  /**
+   * Choose which website page this content entry controls.
+   */
   slug: 'about' | 'services' | 'why-choose' | 'contact' | 'courses' | 'study';
+  /**
+   * Optional badge text displayed above the hero title.
+   */
   heroBadge?: string | null;
+  /**
+   * Main heading shown at the top of the page.
+   */
   heroTitle?: string | null;
+  /**
+   * Supporting text shown below the hero title.
+   */
   heroSubtitle?: string | null;
   content?: {
     root: {
@@ -773,13 +822,24 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   createdAt?: T;
 }
 /**
+ * Control the homepage hero, stats, feature cards, and homepage CTA sections.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "HomeSettings".
  */
 export interface HomeSetting {
   id: string;
+  /**
+   * Main heading shown on the homepage hero section.
+   */
   heroTitle: string;
+  /**
+   * Supporting text shown below the homepage hero title.
+   */
   heroSubtitle: string;
+  /**
+   * Select the image displayed in the homepage hero background.
+   */
   heroImage?: (string | null) | Media;
   trustIndicators?:
     | {
@@ -843,6 +903,8 @@ export interface HomeSetting {
   createdAt?: string | null;
 }
 /**
+ * Manage shared business details, navigation links, and footer content used across the website.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "SiteSettings".
  */

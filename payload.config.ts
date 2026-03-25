@@ -63,6 +63,14 @@ const ctaFields = [
 
 export default buildConfig({
   admin: {
+    components: {
+      views: {
+        dashboard: {
+          Component:
+            './src/app/(payload)/admin/components/EditorDashboard.tsx#EditorDashboard',
+        },
+      },
+    },
     importMap: {
       baseDir: dirname,
     },
@@ -71,14 +79,30 @@ export default buildConfig({
   collections: [
     {
       slug: 'Users',
+      admin: {
+        description: 'Manage admin accounts and login access for the CMS.',
+        group: 'Administration',
+        useAsTitle: 'email',
+      },
       auth: true,
       fields: [],
     },
     {
       slug: 'Media',
+      admin: {
+        description: 'Upload and organise website images before using them on pages.',
+        group: 'Website Content',
+      },
+      labels: {
+        singular: 'Media Item',
+        plural: 'Media Library',
+      },
       upload: true,
       fields: [
         {
+          admin: {
+            description: 'Describe the image for accessibility and SEO.',
+          },
           name: 'alt',
           type: 'text',
           required: true,
@@ -92,21 +116,32 @@ export default buildConfig({
         plural: 'Courses',
       },
       admin: {
+        description: 'Manage the course catalogue shown on the Courses page.',
+        group: 'Academic Content',
         useAsTitle: 'name',
       },
       fields: [
         {
+          admin: {
+            description: 'This is the course title shown on the public website.',
+          },
           name: 'name',
           type: 'text',
           required: true,
         },
         {
+          admin: {
+            description: 'Choose the academic level used for filtering on the Courses page.',
+          },
           name: 'level',
           type: 'select',
           options: ['IGCSE', 'IELTS', 'Level 3', 'Level 4', 'Level 5', 'Level 4 & 5', 'Level 6', 'Level 7'],
           required: true,
         },
         {
+          admin: {
+            description: 'Optional: add a short credits label such as 60 Credits.',
+          },
           name: 'credits',
           type: 'text',
         },
@@ -115,13 +150,44 @@ export default buildConfig({
     {
       slug: 'Programmes',
       admin: {
+        description: 'Manage the study programme cards shown on the Study page.',
+        group: 'Academic Content',
         useAsTitle: 'title',
       },
+      labels: {
+        singular: 'Programme',
+        plural: 'Programmes',
+      },
       fields: [
-        { name: 'level', type: 'select', options: ['BA Pathway', 'MBA Pathway'], required: true },
-        { name: 'title', type: 'text', required: true },
-        { name: 'description', type: 'textarea', required: true },
         {
+          admin: {
+            description: 'Select the programme type shown on the public Study page.',
+          },
+          name: 'level',
+          type: 'select',
+          options: ['BA Pathway', 'MBA Pathway'],
+          required: true,
+        },
+        {
+          admin: {
+            description: 'This is the main programme title shown to visitors.',
+          },
+          name: 'title',
+          type: 'text',
+          required: true,
+        },
+        {
+          admin: {
+            description: 'A short paragraph that explains the programme.',
+          },
+          name: 'description',
+          type: 'textarea',
+          required: true,
+        },
+        {
+          admin: {
+            description: 'Add the bullet points shown inside each programme card.',
+          },
           name: 'features',
           type: 'array',
           fields: [{ name: 'feature', type: 'text' }],
@@ -131,20 +197,37 @@ export default buildConfig({
     {
       slug: 'Pages',
       admin: {
+        description: 'Edit the main website pages such as About, Services, Contact, Courses, and Study.',
+        group: 'Website Content',
         useAsTitle: 'title',
       },
+      labels: {
+        singular: 'Website Page',
+        plural: 'Website Pages',
+      },
       fields: [
-        { name: 'title', type: 'text', required: true },
         {
+          admin: {
+            description: 'Internal page name for editors.',
+          },
+          name: 'title',
+          type: 'text',
+          required: true,
+        },
+        {
+          admin: {
+            description: 'Choose which website page this content entry controls.',
+          },
           name: 'slug',
+          label: 'Page Identifier',
           type: 'select',
           options: ['about', 'services', 'why-choose', 'contact', 'courses', 'study'],
           unique: true,
           required: true,
         },
-        { name: 'heroBadge', type: 'text' },
-        { name: 'heroTitle', type: 'text' },
-        { name: 'heroSubtitle', type: 'textarea' },
+        { name: 'heroBadge', type: 'text', admin: { description: 'Optional badge text displayed above the hero title.' } },
+        { name: 'heroTitle', type: 'text', admin: { description: 'Main heading shown at the top of the page.' } },
+        { name: 'heroSubtitle', type: 'textarea', admin: { description: 'Supporting text shown below the hero title.' } },
         { name: 'content', type: 'richText' },
 
         { name: 'overviewTitle', type: 'text' },
@@ -266,21 +349,34 @@ export default buildConfig({
   globals: [
     {
       slug: 'HomeSettings',
+      admin: {
+        description: 'Control the homepage hero, stats, feature cards, and homepage CTA sections.',
+        group: 'Website Content',
+      },
       label: 'Home Page',
       fields: [
         {
+          admin: {
+            description: 'Main heading shown on the homepage hero section.',
+          },
           name: 'heroTitle',
           type: 'text',
           required: true,
           defaultValue: 'Your Gateway to UK Higher Education',
         },
         {
+          admin: {
+            description: 'Supporting text shown below the homepage hero title.',
+          },
           name: 'heroSubtitle',
           type: 'textarea',
           required: true,
           defaultValue: 'Access affordable, accredited BA and MBA pathway programmes from Online Business School (UK).',
         },
         {
+          admin: {
+            description: 'Select the image displayed in the homepage hero background.',
+          },
           name: 'heroImage',
           type: 'upload',
           relationTo: 'Media',
@@ -314,6 +410,10 @@ export default buildConfig({
     },
     {
       slug: 'SiteSettings',
+      admin: {
+        description: 'Manage shared business details, navigation links, and footer content used across the website.',
+        group: 'Business Settings',
+      },
       label: 'Site Settings',
       fields: [
         { name: 'siteTitle', type: 'text', defaultValue: 'EnidPath International' },
