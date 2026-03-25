@@ -1,11 +1,16 @@
 import React from 'react'
 
 export const Logo = () => (
-  <div className="logo" style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 0' }}>
+  <div className="logo-pill">
     <img
       src="/logo.png"
       alt="EnidPath Logo"
-      style={{ width: 'auto', height: '45px', objectFit: 'contain', display: 'block' }}
+      className="logo-pill__mark"
     />
+    <div className="logo-pill__copy">
+      <span className="logo-pill__eyebrow">Payload CMS</span>
+      <span className="logo-pill__title">EnidPath</span>
+      <span className="logo-pill__subtitle">International</span>
+    </div>
   </div>
 )

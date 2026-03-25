@@ -11,6 +11,8 @@
   --theme-elevation-200: #455679 !important;
   --theme-success-500: #cdb47a !important;
   --theme-primary-500: #cdb47a !important;
+  --theme-warning-500: #f0c879 !important;
+  --theme-error-500: #f08e8e !important;
 }
 
 /* Force Navy Blue on ALL themes (Light, Dark, Auto) */
@@ -36,10 +38,97 @@ main, .app-root__content, .dashboard, .collection-list, .view-document, .gutter 
   border-right: 1px solid rgba(205, 180, 122, 0.15) !important;
 }
 
+.nav {
+  padding: 1rem 0.75rem 1.25rem !important;
+}
+
+.nav-group,
+.nav__group {
+  margin-bottom: 1rem !important;
+  padding: 0.2rem 0 !important;
+  border-radius: 1rem !important;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0)) !important;
+}
+
+.nav a,
+.nav button,
+.nav-group__label,
+.nav__label,
+.doc-controls__label,
+.collection-list__title,
+.list-header h1,
+.template-default h1,
+.template-default h2,
+.template-default h3,
+.field-label,
+label {
+  color: #f9f2dd !important;
+}
+
+.nav-group__label,
+.nav__label {
+  font-size: 0.72rem !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color: rgba(249, 242, 221, 0.58) !important;
+  padding: 0.2rem 0.8rem 0.45rem !important;
+}
+
+.nav a,
+.nav button {
+  border-radius: 0.85rem !important;
+}
+
+.nav a {
+  display: flex !important;
+  align-items: center !important;
+  min-height: 2.65rem !important;
+  padding: 0.7rem 0.8rem !important;
+  color: rgba(255, 255, 255, 0.82) !important;
+}
+
+.nav a:hover,
+.nav button:hover {
+  background: rgba(205, 180, 122, 0.08) !important;
+  color: #ffffff !important;
+}
+
+.nav a[aria-current="page"],
+.nav a.active,
+.nav button[aria-expanded="true"] {
+  background:
+    linear-gradient(135deg, rgba(205, 180, 122, 0.18), rgba(205, 180, 122, 0.06)) !important;
+  border: 1px solid rgba(205, 180, 122, 0.22) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04) !important;
+  color: #fff7e5 !important;
+}
+
 /* Dashboard Cards and List areas */
 .card, .list-controls, .collection-edit__main, .list-header {
   background-color: #2a354c !important;
   border-color: rgba(205, 180, 122, 0.15) !important;
+  border-radius: 1.15rem !important;
+  box-shadow: 0 18px 40px rgba(7, 12, 22, 0.18) !important;
+}
+
+.collection-edit__main,
+.gutter--left,
+.gutter--right {
+  padding-top: 1rem !important;
+}
+
+.list-controls,
+.list-header,
+.collection-edit__main,
+.doc-controls,
+.render-fields {
+  backdrop-filter: blur(10px) !important;
+}
+
+.list-header,
+.collection-edit__main > .tabs-field,
+.collection-edit__main > .render-fields {
+  margin-top: 1rem !important;
 }
 
 /* Input fields fix */
@@ -47,6 +136,80 @@ input, select, textarea, .field-type, .react-select__control {
   background-color: #1a2231 !important;
   color: #ffffff !important;
   border: 1px solid rgba(205, 180, 122, 0.3) !important;
+}
+
+input::placeholder,
+textarea::placeholder,
+[contenteditable="true"]::before,
+.react-select__placeholder,
+.rs__placeholder,
+.field-description,
+.field-description p,
+.tabs-field__description,
+.collection-edit__description,
+.list-header__description {
+  color: rgba(249, 242, 221, 0.72) !important;
+  opacity: 1 !important;
+}
+
+input:hover,
+select:hover,
+textarea:hover,
+.react-select__control:hover,
+.field-type:hover {
+  border-color: rgba(205, 180, 122, 0.55) !important;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+.react-select__control--is-focused,
+.field-type:focus-within {
+  border-color: #cdb47a !important;
+  box-shadow: 0 0 0 3px rgba(205, 180, 122, 0.18) !important;
+}
+
+input:disabled,
+select:disabled,
+textarea:disabled {
+  color: rgba(255, 255, 255, 0.55) !important;
+}
+
+.tabs-field__tab-button,
+.tabs-field__tab-button * {
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+
+.tabs-field__tabs {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 0.55rem !important;
+  margin-bottom: 1.1rem !important;
+  padding: 0.65rem !important;
+  border: 1px solid rgba(205, 180, 122, 0.14) !important;
+  border-radius: 1rem !important;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.025), rgba(255, 255, 255, 0.01)) !important;
+}
+
+.tabs-field__tab-button {
+  min-height: 2.6rem !important;
+  padding: 0.7rem 0.95rem !important;
+  border: 1px solid transparent !important;
+  border-radius: 999px !important;
+  background: rgba(255, 255, 255, 0.02) !important;
+}
+
+.tabs-field__tab-button:hover,
+.tabs-field__tab-button--active,
+.tabs-field__tab-button--active * {
+  color: #f9f2dd !important;
+}
+
+.tabs-field__tab-button--active {
+  background:
+    linear-gradient(135deg, rgba(205, 180, 122, 0.16), rgba(205, 180, 122, 0.06)) !important;
+  border-color: rgba(205, 180, 122, 0.26) !important;
+  border-bottom-color: #cdb47a !important;
 }
 
 /* Button & Link Gold Accents */
@@ -69,4 +232,243 @@ button[type="submit"] {
 .app-header {
   background-color: #1a2231 !important;
   border-bottom: 1px solid rgba(205, 180, 122, 0.15) !important;
+}
+
+.app-header__content {
+  min-height: 4.5rem !important;
+  padding-top: 0.55rem !important;
+  padding-bottom: 0.55rem !important;
+}
+
+.app-header__content,
+.template-default,
+.collection-edit,
+.list-controls,
+.card {
+  color: #ffffff !important;
+}
+
+.btn,
+a {
+  transition: color 160ms ease, border-color 160ms ease, background-color 160ms ease !important;
+}
+
+a:hover,
+.btn--style-secondary:hover,
+.btn--style-pill:hover {
+  color: #f9f2dd !important;
+}
+
+.logo-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.55rem 0.9rem;
+  border: 1px solid rgba(205, 180, 122, 0.22);
+  border-radius: 999px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)),
+    #1a2231;
+  box-shadow: 0 10px 30px rgba(7, 12, 22, 0.28);
+}
+
+.logo-pill__mark {
+  width: 2.5rem;
+  height: 2.5rem;
+  object-fit: contain;
+  border-radius: 0.8rem;
+  background: linear-gradient(180deg, #f5efe1, #e9dcc1);
+  padding: 0.18rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.22);
+}
+
+.logo-pill__copy {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.05;
+}
+
+.logo-pill__eyebrow {
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(249, 242, 221, 0.68);
+}
+
+.logo-pill__title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.logo-pill__subtitle {
+  font-size: 0.78rem;
+  color: rgba(249, 242, 221, 0.74);
+}
+
+.icon-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.75rem;
+  background: linear-gradient(180deg, #f5efe1, #e9dcc1);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+}
+
+.icon-chip img {
+  width: 1.4rem;
+  height: 1.4rem;
+  object-fit: contain;
+}
+
+.editor-dashboard {
+  display: grid;
+  gap: 1.4rem;
+}
+
+.editor-dashboard__hero,
+.editor-dashboard__section {
+  border-radius: 1.35rem;
+  overflow: hidden;
+}
+
+.editor-dashboard__hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(260px, 0.9fr);
+  gap: 1.25rem;
+  padding: 1.6rem;
+}
+
+.editor-dashboard__eyebrow {
+  margin-bottom: 0.5rem;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(249, 242, 221, 0.66);
+}
+
+.editor-dashboard__title {
+  margin: 0 0 0.75rem !important;
+  font-size: clamp(1.8rem, 3vw, 2.6rem) !important;
+  line-height: 1.05 !important;
+}
+
+.editor-dashboard__copy {
+  max-width: 42rem;
+  margin: 0;
+  color: rgba(249, 242, 221, 0.82);
+  line-height: 1.7;
+}
+
+.editor-dashboard__panel {
+  padding: 1.1rem 1.15rem;
+  border: 1px solid rgba(205, 180, 122, 0.18);
+  border-radius: 1.1rem;
+  background: rgba(10, 16, 28, 0.28);
+}
+
+.editor-dashboard__panel h2,
+.editor-dashboard__section-header h2 {
+  margin: 0 0 0.45rem !important;
+}
+
+.editor-dashboard__panel ol {
+  margin: 0.85rem 0 0;
+  padding-left: 1.15rem;
+  color: rgba(249, 242, 221, 0.82);
+}
+
+.editor-dashboard__panel li + li {
+  margin-top: 0.45rem;
+}
+
+.editor-dashboard__section {
+  padding: 1.35rem;
+  border: 1px solid rgba(205, 180, 122, 0.14);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.025), rgba(255, 255, 255, 0.01));
+  box-shadow: 0 18px 40px rgba(7, 12, 22, 0.16);
+}
+
+.editor-dashboard__section-header {
+  margin-bottom: 1rem;
+}
+
+.editor-dashboard__section-header p {
+  margin: 0;
+  color: rgba(249, 242, 221, 0.68);
+}
+
+.editor-dashboard__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.editor-dashboard__card {
+  display: grid;
+  gap: 0.6rem;
+  padding: 1.05rem 1.1rem;
+  border: 1px solid rgba(205, 180, 122, 0.14);
+  border-radius: 1rem;
+  background: rgba(10, 16, 28, 0.22);
+  text-decoration: none;
+}
+
+.editor-dashboard__card:hover {
+  transform: translateY(-1px);
+  border-color: rgba(205, 180, 122, 0.3);
+  background: rgba(205, 180, 122, 0.08);
+}
+
+.editor-dashboard__card-title {
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.editor-dashboard__card-copy {
+  color: rgba(249, 242, 221, 0.72);
+  line-height: 1.55;
+}
+
+.editor-dashboard__card-link {
+  font-size: 0.84rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #f0d28c;
+}
+
+.editor-dashboard__tips {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.editor-dashboard__tip {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid rgba(205, 180, 122, 0.12);
+  border-radius: 0.95rem;
+  background: rgba(10, 16, 28, 0.18);
+  color: rgba(249, 242, 221, 0.8);
+}
+
+.editor-dashboard__tip-dot {
+  width: 0.65rem;
+  height: 0.65rem;
+  margin-top: 0.4rem;
+  flex-shrink: 0;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #f0d28c, #cdb47a);
+  box-shadow: 0 0 0 4px rgba(205, 180, 122, 0.12);
+}
+
+@media (max-width: 960px) {
+  .editor-dashboard__hero {
+    grid-template-columns: 1fr;
+  }
 }
