@@ -1,20 +1,12 @@
 import Link from "next/link";
 import { Mail, Phone, MapPin, ExternalLink } from "lucide-react";
+import { defaultSiteSettings } from "@/lib/site-settings";
 
-const footerLinks = {
-  quickLinks: [
-    { name: "Home", href: "/" },
-    { name: "About EnidPath", href: "/about" },
-    { name: "Study with OBS", href: "/study" },
-    { name: "Our Services", href: "/services" },
-  ],
-  resources: [
-    { name: "Why Choose Us", href: "/why-choose" },
-    { name: "Contact Us", href: "/contact" },
-  ],
+type FooterProps = {
+  siteSettings?: typeof defaultSiteSettings;
 };
 
-export function Footer() {
+export function Footer({ siteSettings = defaultSiteSettings }: FooterProps) {
   return (
     <footer className="bg-primary text-primary-foreground">
       <div className="container py-16">
@@ -26,16 +18,16 @@ export function Footer() {
                 <span className="text-primary-foreground font-display font-bold text-xl">EP</span>
               </div>
               <div>
-                <div className="font-display font-bold text-xl">EnidPath</div>
-                <div className="text-xs opacity-70">International</div>
+                <div className="font-display font-bold text-xl">{siteSettings.siteShortName}</div>
+                <div className="text-xs opacity-70">{siteSettings.siteSuffix}</div>
               </div>
             </div>
             <p className="text-sm opacity-80 leading-relaxed mb-6">
-              Your trusted partner for accessing quality UK higher education. Authorised recruitment partner of Online Business School (UK).
+              {siteSettings.footerDescription}
             </p>
             <div className="flex items-center gap-2 text-xs">
               <span className="opacity-60">In partnership with</span>
-              <span className="font-semibold">Online Business School (UK)</span>
+              <span className="font-semibold">{siteSettings.footerPartnerLabel}</span>
             </div>
           </div>
 
@@ -43,13 +35,13 @@ export function Footer() {
           <div>
             <h3 className="font-display font-semibold text-lg mb-6">Quick Links</h3>
             <ul className="space-y-3">
-              {footerLinks.quickLinks.map((link) => (
-                <li key={link.name}>
+              {siteSettings.footerQuickLinks.map((link) => (
+                <li key={link.label}>
                   <Link
                     href={link.href}
                     className="text-sm opacity-80 hover:opacity-100 hover:text-accent transition-all"
                   >
-                    {link.name}
+                    {link.label}
                   </Link>
                 </li>
               ))}
@@ -60,24 +52,24 @@ export function Footer() {
           <div>
             <h3 className="font-display font-semibold text-lg mb-6">Resources</h3>
             <ul className="space-y-3">
-              {footerLinks.resources.map((link) => (
-                <li key={link.name}>
+              {siteSettings.footerResourceLinks.map((link) => (
+                <li key={link.label}>
                   <Link
                     href={link.href}
                     className="text-sm opacity-80 hover:opacity-100 hover:text-accent transition-all"
                   >
-                    {link.name}
+                    {link.label}
                   </Link>
                 </li>
               ))}
               <li>
                 <a
-                  href="https://www.onlinebusinessschool.com"
+                  href={siteSettings.footerExternalHref}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-sm opacity-80 hover:opacity-100 hover:text-accent transition-all inline-flex items-center gap-1"
                 >
-                  Online Business School
+                  {siteSettings.footerExternalLabel}
                   <ExternalLink className="h-3 w-3" />
                 </a>
               </li>
@@ -91,19 +83,19 @@ export function Footer() {
               <li className="flex items-start gap-3">
                 <MapPin className="h-5 w-5 opacity-60 mt-0.5 flex-shrink-0" />
                 <span className="text-sm opacity-80">
-                  Kampala, Uganda
+                  {siteSettings.address}
                 </span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="h-5 w-5 opacity-60 flex-shrink-0" />
-                <a href="tel:+256700000000" className="text-sm opacity-80 hover:opacity-100 hover:text-accent transition-all">
-                  +256 700 000 000
+                <a href={`tel:${siteSettings.contactPhone}`} className="text-sm opacity-80 hover:opacity-100 hover:text-accent transition-all">
+                  {siteSettings.contactPhone}
                 </a>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="h-5 w-5 opacity-60 flex-shrink-0" />
-                <a href="mailto:info@enidpath.com" className="text-sm opacity-80 hover:opacity-100 hover:text-accent transition-all">
-                  info@enidpath.com
+                <a href={`mailto:${siteSettings.contactEmail}`} className="text-sm opacity-80 hover:opacity-100 hover:text-accent transition-all">
+                  {siteSettings.contactEmail}
                 </a>
               </li>
             </ul>
@@ -115,9 +107,9 @@ export function Footer() {
       <div className="border-t border-primary-foreground/10">
         <div className="container py-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm opacity-60">
-            <p>© {new Date().getFullYear()} EnidPath International. All rights reserved.</p>
+            <p>© {new Date().getFullYear()} {siteSettings.siteTitle}. All rights reserved.</p>
             <p className="text-xs">
-              EnidPath International is an authorised recruitment partner and does not award degrees. All programmes are delivered by Online Business School (UK).
+              {siteSettings.footerDisclaimer}
             </p>
           </div>
         </div>

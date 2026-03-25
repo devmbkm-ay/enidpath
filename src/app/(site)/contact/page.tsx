@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -5,11 +7,18 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { MapPin, Phone, Mail, Clock, MessageCircle, Send, CheckCircle } from "lucide-react";
 import { toast } from "sonner";
-import { getPayload } from "@/lib/payload";
 
 const defaultContent = {
   heroTitle: "Contact Us",
   heroSubtitle: "Ready to start your educational journey? Get in touch with our team for personalised guidance and support.",
+  formTitle: "Send Us a Message",
+  formSubtitle: "Fill out the form below and our team will get back to you within 24 hours.",
+  contactInfoTitle: "Get in Touch",
+  contactInfoSubtitle: "Reach out to us through any of the following channels. We're here to help!",
+  whatsappTitle: "Quick Response via WhatsApp",
+  whatsappBody: "For faster responses, reach out to us on WhatsApp. We typically respond within minutes during office hours.",
+  trustBannerText:
+    "is an authorised recruitment and student support partner of Online Business School (UK). We provide guidance and support services—all academic programmes are delivered by OBS.",
 };
 
 export default function Contact() {
@@ -35,7 +44,10 @@ export default function Contact() {
         const pageResponse = await fetch('/api/Pages?where[slug][equals]=contact');
         const pages = await pageResponse.json();
         if (pages.docs && pages.docs.length > 0) {
-          setPageData(pages.docs[0]);
+          setPageData({
+            ...defaultContent,
+            ...pages.docs[0],
+          });
         }
       } catch (error) {
         console.error("Failed to fetch contact data:", error);
@@ -89,7 +101,7 @@ export default function Contact() {
     {
       icon: Clock,
       title: "Office Hours",
-      details: ["Mon - Fri: 9:00 AM - 6:00 PM", "Sat: 9:00 AM - 1:00 PM"],
+      details: (siteSettings.officeHours || [{ text: "Mon - Fri: 9:00 AM - 6:00 PM" }, { text: "Sat: 9:00 AM - 1:00 PM" }]).map((item: any) => item.text),
       description: "We're here to help",
     },
   ];
@@ -117,10 +129,10 @@ export default function Contact() {
             {/* Contact Form */}
             <div>
               <h2 className="text-2xl font-display font-bold text-foreground mb-2">
-                Send Us a Message
+                {pageData.formTitle || defaultContent.formTitle}
               </h2>
               <p className="text-muted-foreground mb-8">
-                Fill out the form below and our team will get back to you within 24 hours.
+                {pageData.formSubtitle || defaultContent.formSubtitle}
               </p>
 
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -203,10 +215,10 @@ export default function Contact() {
             {/* Contact Information */}
             <div>
               <h2 className="text-2xl font-display font-bold text-foreground mb-2">
-                Get in Touch
+                {pageData.contactInfoTitle || defaultContent.contactInfoTitle}
               </h2>
               <p className="text-muted-foreground mb-8">
-                Reach out to us through any of the following channels. We're here to help!
+                {pageData.contactInfoSubtitle || defaultContent.contactInfoSubtitle}
               </p>
 
               <div className="space-y-6">
@@ -234,9 +246,11 @@ export default function Contact() {
                 <div className="flex items-start gap-4">
                   <MessageCircle className="h-8 w-8 text-green-600 flex-shrink-0" />
                   <div>
-                    <h3 className="font-semibold text-foreground mb-2">Quick Response via WhatsApp</h3>
+                    <h3 className="font-semibold text-foreground mb-2">
+                      {pageData.whatsappTitle || defaultContent.whatsappTitle}
+                    </h3>
                     <p className="text-muted-foreground text-sm mb-4">
-                      For faster responses, reach out to us on WhatsApp. We typically respond within minutes during office hours.
+                      {pageData.whatsappBody || defaultContent.whatsappBody}
                     </p>
                     <Button variant="outline" size="sm" asChild>
                       <a href={`https://wa.me/${siteSettings.whatsappNumber || "256700000000"}`} target="_blank" rel="noopener noreferrer">
@@ -257,7 +271,7 @@ export default function Contact() {
           <div className="flex flex-col md:flex-row items-center justify-center gap-6 text-center">
             <CheckCircle className="h-8 w-8 text-green-600" />
             <p className="text-muted-foreground max-w-2xl">
-              <span className="font-semibold text-foreground">EnidPath International</span> is an authorised recruitment and student support partner of Online Business School (UK). We provide guidance and support services—all academic programmes are delivered by OBS.
+              <span className="font-semibold text-foreground">EnidPath International</span> {pageData.trustBannerText || defaultContent.trustBannerText}
             </p>
           </div>
         </div>

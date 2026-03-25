@@ -2,48 +2,83 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, Users, BookOpen, Award, GraduationCap, Globe, Shield, ArrowRight, Phone, Star } from "lucide-react";
 import defaultHero from "@/assets/hero-2.webp";
-import { getPayload } from "@/lib/payload";
+import { getHomeContent } from "@/lib/site-content";
+import { resolveSiteIcon } from "@/lib/site-icons";
 
-const trustIndicators = [
+const defaultTrustIndicators = [
   { icon: Award, text: "UK Accredited Programmes" },
   { icon: Shield, text: "OFQUAL Regulated" },
   { icon: Globe, text: "Study Online, Anywhere" },
   { icon: GraduationCap, text: "BA & MBA Pathways" },
 ];
 
-export default async function Home() {
-  const payload = await getPayload();
-  
-  const { docs: homeDocs } = await payload.find({
-    collection: 'HomePages',
-    limit: 1,
-    depth: 1,
-  });
+const defaultHomeContent = {
+  heroTitle: "Your Gateway to UK Higher Education",
+  heroSubtitle:
+    "Access affordable, accredited BA and MBA pathway programmes from Online Business School (UK). Complete your qualification for less than £6,000 with full student support from EnidPath International.",
+  heroImage: null,
+  stats: [
+    { value: "£6,000", label: "Full Programme Cost", sublabel: "Less than" },
+    { value: "100%", label: "Online Learning" },
+    { value: "UK", label: "Accredited by OBS" },
+    { value: "24/7", label: "Student Support" },
+  ],
+  trustIndicators: defaultTrustIndicators.map((item) => ({ text: item.text })),
+  featuresSectionTitle: "Why Partner with EnidPath International?",
+  featuresSectionSubtitle:
+    "We connect ambitious students with world-class UK education through our partnership with Online Business School.",
+  features: [
+    {
+      icon: "book-open",
+      title: "UK Accredited Qualifications",
+      description:
+        "Access quality BA and MBA pathway programmes delivered by Online Business School (UK), regulated under the OFQUAL and QCF frameworks.",
+    },
+    {
+      icon: "users",
+      title: "Dedicated Student Support",
+      description:
+        "Receive personalised guidance from application through graduation. Our team is here to support your educational journey every step of the way.",
+    },
+    {
+      icon: "globe",
+      title: "Study From Anywhere",
+      description:
+        "Flexible online learning that fits your schedule. Balance your studies with work and personal commitments without relocating.",
+    },
+  ],
+  partnershipTitle: "In Partnership with Online Business School (UK)",
+  partnershipBody:
+    "EnidPath International is an authorised recruitment and student support partner. All BA and MBA pathway programmes are delivered and accredited by Online Business School, regulated under OFQUAL and the QCF framework.",
+  partnershipBadges: [
+    { text: "UK Regulated" },
+    { text: "OFQUAL Recognised" },
+    { text: "QCF Framework" },
+  ],
+  ctaTitle: "Ready to Start Your UK Education Journey?",
+  ctaBody:
+    "Contact EnidPath International today for personalised guidance and support with your application to Online Business School programmes.",
+  ctaPrimaryLabel: "Contact Us Now",
+  ctaPrimaryHref: "/contact",
+  ctaSecondaryLabel: "View Our Services",
+  ctaSecondaryHref: "/services",
+};
 
-  const data = homeDocs[0] || {
-    heroTitle: "Your Gateway to UK Higher Education",
-    heroSubtitle: "Access affordable, accredited BA and MBA pathway programmes from Online Business School (UK). Complete your qualification for less than £6,000 with full student support from EnidPath International.",
-    heroImage: null,
-    stats: [
-      { value: "£6,000", label: "Full Programme Cost", sublabel: "Less than" },
-      { value: "100%", label: "Online Learning" },
-      { value: "UK", label: "Accredited by OBS" },
-      { value: "24/7", label: "Student Support" },
-    ],
-    features: [
-      {
-        title: "UK Accredited Qualifications",
-        description: "Access quality BA and MBA pathway programmes delivered by Online Business School (UK), regulated under the OFQUAL and QCF frameworks.",
-      },
-      {
-        title: "Dedicated Student Support",
-        description: "Receive personalised guidance from application through graduation. Our team is here to support your educational journey every step of the way.",
-      },
-      {
-        title: "Study From Anywhere",
-        description: "Flexible online learning that fits your schedule. Balance your studies with work and personal commitments without relocating.",
-      },
-    ]
+export default async function Home() {
+  const homeContent = await getHomeContent();
+  const data = {
+    ...defaultHomeContent,
+    ...homeContent,
+    stats: homeContent?.stats?.length ? homeContent.stats : defaultHomeContent.stats,
+    trustIndicators:
+      homeContent?.trustIndicators?.length
+        ? homeContent.trustIndicators
+        : defaultHomeContent.trustIndicators,
+    features: homeContent?.features?.length ? homeContent.features : defaultHomeContent.features,
+    partnershipBadges:
+      homeContent?.partnershipBadges?.length
+        ? homeContent.partnershipBadges
+        : defaultHomeContent.partnershipBadges,
   };
 
   // Gestion de l'image de fond dynamique
@@ -90,16 +125,21 @@ export default async function Home() {
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {trustIndicators.map((item, index) => (
+              {data.trustIndicators.map((item: any, index: number) => {
+                const fallbackIcon = defaultTrustIndicators[index]?.icon ?? Award;
+                const Icon = resolveSiteIcon(item.icon, fallbackIcon);
+
+                return (
                 <div
-                  key={`${item.text}-${index}`}
+                  key={item.id ?? `${item.text}-${index}`}
                   className="flex items-center gap-3 text-primary-foreground/90 animate-fade-in"
                   style={{ animationDelay: `${0.2 + index * 0.1}s` }}
                 >
-                  <item.icon className="h-5 w-5 text-accent flex-shrink-0" />
+                  <Icon className="h-5 w-5 text-accent flex-shrink-0" />
                   <span className="text-sm">{item.text}</span>
                 </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>
@@ -130,10 +170,10 @@ export default async function Home() {
         <div className="container">
           <div className="text-center max-w-2xl mx-auto mb-16">
             <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4">
-              Why Partner with EnidPath International?
+              {data.featuresSectionTitle}
             </h2>
             <p className="text-muted-foreground text-lg">
-              We connect ambitious students with world-class UK education through our partnership with Online Business School.
+              {data.featuresSectionSubtitle}
             </p>
           </div>
 
@@ -144,10 +184,12 @@ export default async function Home() {
                 className="bg-card p-8 rounded-lg card-shadow hover:shadow-lg transition-shadow duration-300"
               >
                 <div className="w-14 h-14 rounded-lg bg-secondary/10 flex items-center justify-center mb-6">
-                  {/* Utilisation d'icônes par défaut selon l'index pour simplifier */}
-                  {index === 0 && <BookOpen className="h-7 w-7 text-secondary" />}
-                  {index === 1 && <Users className="h-7 w-7 text-secondary" />}
-                  {index >= 2 && <Globe className="h-7 w-7 text-secondary" />}
+                  {(() => {
+                    const fallbackIcon = [BookOpen, Users, Globe][index] ?? BookOpen;
+                    const Icon = resolveSiteIcon(feature.icon, fallbackIcon);
+
+                    return <Icon className="h-7 w-7 text-secondary" />;
+                  })()}
                 </div>
                 <h3 className="text-xl font-display font-semibold text-foreground mb-3">
                   {feature.title}
@@ -166,24 +208,21 @@ export default async function Home() {
         <div className="container">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground mb-4">
-              In Partnership with Online Business School (UK)
+              {data.partnershipTitle}
             </h2>
             <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
-              EnidPath International is an authorised recruitment and student support partner. All BA and MBA pathway programmes are delivered and accredited by Online Business School, regulated under OFQUAL and the QCF framework.
+              {data.partnershipBody}
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <div className="flex items-center gap-2 bg-card px-4 py-2 rounded-full">
+              {data.partnershipBadges.map((badge: any, index: number) => (
+                <div
+                  key={badge.id ?? `${badge.text}-${index}`}
+                  className="flex items-center gap-2 bg-card px-4 py-2 rounded-full"
+                >
                 <CheckCircle className="h-5 w-5 text-green-600" />
-                <span className="text-sm font-medium">UK Regulated</span>
-              </div>
-              <div className="flex items-center gap-2 bg-card px-4 py-2 rounded-full">
-                <CheckCircle className="h-5 w-5 text-green-600" />
-                <span className="text-sm font-medium">OFQUAL Recognised</span>
-              </div>
-              <div className="flex items-center gap-2 bg-card px-4 py-2 rounded-full">
-                <CheckCircle className="h-5 w-5 text-green-600" />
-                <span className="text-sm font-medium">QCF Framework</span>
-              </div>
+                  <span className="text-sm font-medium">{badge.text}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -194,21 +233,23 @@ export default async function Home() {
         <div className="container">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-display font-bold text-primary-foreground mb-4">
-              Ready to Start Your UK Education Journey?
+              {data.ctaTitle}
             </h2>
             <p className="text-primary-foreground/80 text-lg mb-8">
-              Contact EnidPath International today for personalised guidance and support with your application to Online Business School programmes.
+              {data.ctaBody}
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <Button variant="hero" size="lg" asChild>
-                <Link href="/contact">
+                <Link href={data.ctaPrimaryHref || "/contact"}>
                   <Phone className="mr-2 h-5 w-5" />
-                  Contact Us Now
+                  {data.ctaPrimaryLabel}
                 </Link>
               </Button>
-              <Button variant="hero-outline" size="lg" asChild>
-                <Link href="/services">View Our Services</Link>
-              </Button>
+              {data.ctaSecondaryLabel && data.ctaSecondaryHref && (
+                <Button variant="hero-outline" size="lg" asChild>
+                  <Link href={data.ctaSecondaryHref}>{data.ctaSecondaryLabel}</Link>
+                </Button>
+              )}
             </div>
           </div>
         </div>

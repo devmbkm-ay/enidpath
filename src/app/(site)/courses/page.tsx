@@ -21,6 +21,14 @@ const levelDescriptions: Record<string, string> = {
 const defaultContent = {
   heroTitle: "Available Courses",
   heroSubtitle: "Explore the full range of UK-accredited programmes delivered by Online Business School (UK). EnidPath International provides guidance and support throughout your learning journey.",
+  filterLabel: "Filter by Level:",
+  disclaimerText:
+    "All courses listed are delivered and accredited by Online Business School (UK). EnidPath International is an authorised recruitment and student support partner. Contact us for guidance on course selection and enrolment support.",
+  ctaTitle: "Need Help Choosing a Course?",
+  ctaBody:
+    "Our counsellors are here to help you find the right programme for your career goals. Get personalised guidance from EnidPath International.",
+  ctaPrimaryLabel: "Contact Our Team",
+  ctaPrimaryHref: "/contact",
 };
 
 const Courses = () => {
@@ -47,7 +55,10 @@ const Courses = () => {
         }
 
         if (pageData.docs && pageData.docs.length > 0) {
-          setPageData(pageData.docs[0]);
+          setPageData({
+            ...defaultContent,
+            ...pageData.docs[0],
+          });
         }
       } catch (error) {
         console.error("Failed to fetch courses:", error);
@@ -67,6 +78,14 @@ const Courses = () => {
     acc[course.level].push(course);
     return acc;
   }, {} as Record<string, any[]>);
+
+  const levelDescriptionMap = (pageData.levelDescriptions || []).reduce(
+    (acc: Record<string, string>, item: any) => {
+      acc[item.level] = item.description;
+      return acc;
+    },
+    { ...levelDescriptions },
+  );
 
   return (
     <div className="min-h-screen">
@@ -94,7 +113,9 @@ const Courses = () => {
         <div className="container">
           <div className="flex items-center gap-3 mb-4">
             <Filter className="h-5 w-5 text-muted-foreground" />
-            <span className="font-medium text-foreground">Filter by Level:</span>
+            <span className="font-medium text-foreground">
+              {pageData.filterLabel || defaultContent.filterLabel}
+            </span>
           </div>
           <div className="flex flex-wrap gap-2">
             {courseLevels.map((level) => (
@@ -130,19 +151,22 @@ const Courses = () => {
           </div>
 
           <div className="space-y-12">
-            {Object.entries(groupedCourses).map(([level, levelCourses]) => (
+            {Object.entries(groupedCourses).map(([level, levelCourses]) => {
+              const coursesForLevel = levelCourses as any[];
+
+              return (
               <div key={level}>
                 <div className="mb-6">
                   <h2 className="text-2xl font-display font-bold text-foreground mb-2">
                     {level}
                   </h2>
                   <p className="text-muted-foreground">
-                    {levelDescriptions[level]}
+                    {levelDescriptionMap[level]}
                   </p>
                 </div>
                 
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {levelCourses.map((course) => (
+                  {coursesForLevel.map((course) => (
                     <Card 
                       key={course.id} 
                       className="hover:shadow-lg transition-shadow border-border hover:border-primary/30"
@@ -173,15 +197,14 @@ const Courses = () => {
                   ))}
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
 
           {/* Disclaimer */}
           <div className="mt-16 p-6 bg-secondary/50 rounded-lg border border-border">
             <p className="text-sm text-muted-foreground text-center">
-              All courses listed are delivered and accredited by <strong>Online Business School (UK)</strong>. 
-              EnidPath International is an authorised recruitment and student support partner. 
-              Contact us for guidance on course selection and enrolment support.
+              {pageData.disclaimerText || defaultContent.disclaimerText}
             </p>
           </div>
         </div>
@@ -191,14 +214,15 @@ const Courses = () => {
       <section className="py-16 bg-primary text-primary-foreground">
         <div className="container text-center">
           <h2 className="text-3xl font-display font-bold mb-4">
-            Need Help Choosing a Course?
+            {pageData.ctaTitle || defaultContent.ctaTitle}
           </h2>
           <p className="text-primary-foreground/90 mb-8 max-w-2xl mx-auto">
-            Our counsellors are here to help you find the right programme for your career goals. 
-            Get personalised guidance from EnidPath International.
+            {pageData.ctaBody || defaultContent.ctaBody}
           </p>
           <Button variant="accent" size="lg" asChild>
-            <Link href="/contact">Contact Our Team</Link>
+            <Link href={pageData.ctaPrimaryHref || "/contact"}>
+              {pageData.ctaPrimaryLabel || defaultContent.ctaPrimaryLabel}
+            </Link>
           </Button>
         </div>
       </section>

@@ -210,7 +210,8 @@ export interface Programme {
 export interface Page {
   id: string;
   title: string;
-  slug: 'about' | 'services' | 'why-choose' | 'contact' | 'courses';
+  slug: 'about' | 'services' | 'why-choose' | 'contact' | 'courses' | 'study';
+  heroBadge?: string | null;
   heroTitle?: string | null;
   heroSubtitle?: string | null;
   content?: {
@@ -228,6 +229,212 @@ export interface Page {
     };
     [k: string]: unknown;
   } | null;
+  overviewTitle?: string | null;
+  overviewParagraphs?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  missionTitle?: string | null;
+  missionBody?: string | null;
+  visionTitle?: string | null;
+  visionBody?: string | null;
+  valuesSectionTitle?: string | null;
+  valuesSectionSubtitle?: string | null;
+  coreValues?:
+    | {
+        icon?:
+          | (
+              | 'award'
+              | 'book-open'
+              | 'clock'
+              | 'credit-card'
+              | 'eye'
+              | 'file-text'
+              | 'globe'
+              | 'graduation-cap'
+              | 'headphones'
+              | 'heart'
+              | 'lightbulb'
+              | 'message-circle'
+              | 'shield'
+              | 'target'
+              | 'trending-up'
+              | 'user-check'
+              | 'users'
+            )
+          | null;
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  partnershipTitle?: string | null;
+  partnershipBody?: string | null;
+  partnershipButtonLabel?: string | null;
+  partnershipButtonHref?: string | null;
+  reasonsSectionTitle?: string | null;
+  reasonsSectionSubtitle?: string | null;
+  reasons?:
+    | {
+        icon?:
+          | (
+              | 'award'
+              | 'book-open'
+              | 'clock'
+              | 'credit-card'
+              | 'eye'
+              | 'file-text'
+              | 'globe'
+              | 'graduation-cap'
+              | 'headphones'
+              | 'heart'
+              | 'lightbulb'
+              | 'message-circle'
+              | 'shield'
+              | 'target'
+              | 'trending-up'
+              | 'user-check'
+              | 'users'
+            )
+          | null;
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  expectationsTitle?: string | null;
+  expectationsBody?: string | null;
+  expectationPoints?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  testimonialQuote?: string | null;
+  testimonialAuthor?: string | null;
+  testimonialRole?: string | null;
+  commitmentTitle?: string | null;
+  commitmentBody?: string | null;
+  commitmentBadges?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  serviceNoteText?: string | null;
+  servicesSectionTitle?: string | null;
+  servicesSectionSubtitle?: string | null;
+  serviceCards?:
+    | {
+        icon?:
+          | (
+              | 'award'
+              | 'book-open'
+              | 'clock'
+              | 'credit-card'
+              | 'eye'
+              | 'file-text'
+              | 'globe'
+              | 'graduation-cap'
+              | 'headphones'
+              | 'heart'
+              | 'lightbulb'
+              | 'message-circle'
+              | 'shield'
+              | 'target'
+              | 'trending-up'
+              | 'user-check'
+              | 'users'
+            )
+          | null;
+        title: string;
+        description: string;
+        features?:
+          | {
+              text: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  processSectionTitle?: string | null;
+  processSectionSubtitle?: string | null;
+  processSteps?:
+    | {
+        step: string;
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  formTitle?: string | null;
+  formSubtitle?: string | null;
+  contactInfoTitle?: string | null;
+  contactInfoSubtitle?: string | null;
+  whatsappTitle?: string | null;
+  whatsappBody?: string | null;
+  trustBannerText?: string | null;
+  filterLabel?: string | null;
+  levelDescriptions?:
+    | {
+        level: 'IGCSE' | 'IELTS' | 'Level 3' | 'Level 4' | 'Level 5' | 'Level 4 & 5' | 'Level 6' | 'Level 7';
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  disclaimerText?: string | null;
+  noticeTitle?: string | null;
+  noticeBody?: string | null;
+  aboutTitle?: string | null;
+  aboutParagraphs?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  programmesSectionTitle?: string | null;
+  programmesSectionSubtitle?: string | null;
+  benefitsSectionTitle?: string | null;
+  benefitsSectionSubtitle?: string | null;
+  studyBenefits?:
+    | {
+        icon?:
+          | (
+              | 'award'
+              | 'book-open'
+              | 'clock'
+              | 'credit-card'
+              | 'eye'
+              | 'file-text'
+              | 'globe'
+              | 'graduation-cap'
+              | 'headphones'
+              | 'heart'
+              | 'lightbulb'
+              | 'message-circle'
+              | 'shield'
+              | 'target'
+              | 'trending-up'
+              | 'user-check'
+              | 'users'
+            )
+          | null;
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  affordabilityTitle?: string | null;
+  affordabilityBody?: string | null;
+  ctaTitle?: string | null;
+  ctaBody?: string | null;
+  ctaPrimaryLabel?: string | null;
+  ctaPrimaryHref?: string | null;
+  ctaSecondaryLabel?: string | null;
+  ctaSecondaryHref?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -392,9 +599,136 @@ export interface ProgrammesSelect<T extends boolean = true> {
 export interface PagesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
+  heroBadge?: T;
   heroTitle?: T;
   heroSubtitle?: T;
   content?: T;
+  overviewTitle?: T;
+  overviewParagraphs?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  missionTitle?: T;
+  missionBody?: T;
+  visionTitle?: T;
+  visionBody?: T;
+  valuesSectionTitle?: T;
+  valuesSectionSubtitle?: T;
+  coreValues?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  partnershipTitle?: T;
+  partnershipBody?: T;
+  partnershipButtonLabel?: T;
+  partnershipButtonHref?: T;
+  reasonsSectionTitle?: T;
+  reasonsSectionSubtitle?: T;
+  reasons?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  expectationsTitle?: T;
+  expectationsBody?: T;
+  expectationPoints?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  testimonialQuote?: T;
+  testimonialAuthor?: T;
+  testimonialRole?: T;
+  commitmentTitle?: T;
+  commitmentBody?: T;
+  commitmentBadges?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  serviceNoteText?: T;
+  servicesSectionTitle?: T;
+  servicesSectionSubtitle?: T;
+  serviceCards?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        description?: T;
+        features?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  processSectionTitle?: T;
+  processSectionSubtitle?: T;
+  processSteps?:
+    | T
+    | {
+        step?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  formTitle?: T;
+  formSubtitle?: T;
+  contactInfoTitle?: T;
+  contactInfoSubtitle?: T;
+  whatsappTitle?: T;
+  whatsappBody?: T;
+  trustBannerText?: T;
+  filterLabel?: T;
+  levelDescriptions?:
+    | T
+    | {
+        level?: T;
+        description?: T;
+        id?: T;
+      };
+  disclaimerText?: T;
+  noticeTitle?: T;
+  noticeBody?: T;
+  aboutTitle?: T;
+  aboutParagraphs?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  programmesSectionTitle?: T;
+  programmesSectionSubtitle?: T;
+  benefitsSectionTitle?: T;
+  benefitsSectionSubtitle?: T;
+  studyBenefits?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  affordabilityTitle?: T;
+  affordabilityBody?: T;
+  ctaTitle?: T;
+  ctaBody?: T;
+  ctaPrimaryLabel?: T;
+  ctaPrimaryHref?: T;
+  ctaSecondaryLabel?: T;
+  ctaSecondaryHref?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -447,6 +781,12 @@ export interface HomeSetting {
   heroTitle: string;
   heroSubtitle: string;
   heroImage?: (string | null) | Media;
+  trustIndicators?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
   stats?:
     | {
         value?: string | null;
@@ -455,6 +795,50 @@ export interface HomeSetting {
         id?: string | null;
       }[]
     | null;
+  featuresSectionTitle?: string | null;
+  featuresSectionSubtitle?: string | null;
+  features?:
+    | {
+        icon?:
+          | (
+              | 'award'
+              | 'book-open'
+              | 'clock'
+              | 'credit-card'
+              | 'eye'
+              | 'file-text'
+              | 'globe'
+              | 'graduation-cap'
+              | 'headphones'
+              | 'heart'
+              | 'lightbulb'
+              | 'message-circle'
+              | 'shield'
+              | 'target'
+              | 'trending-up'
+              | 'user-check'
+              | 'users'
+            )
+          | null;
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  partnershipTitle?: string | null;
+  partnershipBody?: string | null;
+  partnershipBadges?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  ctaTitle?: string | null;
+  ctaBody?: string | null;
+  ctaPrimaryLabel?: string | null;
+  ctaPrimaryHref?: string | null;
+  ctaSecondaryLabel?: string | null;
+  ctaSecondaryHref?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -465,10 +849,46 @@ export interface HomeSetting {
 export interface SiteSetting {
   id: string;
   siteTitle?: string | null;
+  siteShortName?: string | null;
+  siteSuffix?: string | null;
+  headerPartnerLabel?: string | null;
+  headerCtaLabel?: string | null;
   contactEmail?: string | null;
   contactPhone?: string | null;
   whatsappNumber?: string | null;
   address?: string | null;
+  officeHours?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  footerDescription?: string | null;
+  footerPartnerLabel?: string | null;
+  footerDisclaimer?: string | null;
+  headerNavigation?:
+    | {
+        label: string;
+        href: string;
+        id?: string | null;
+      }[]
+    | null;
+  footerQuickLinks?:
+    | {
+        label: string;
+        href: string;
+        id?: string | null;
+      }[]
+    | null;
+  footerResourceLinks?:
+    | {
+        label: string;
+        href: string;
+        id?: string | null;
+      }[]
+    | null;
+  footerExternalLabel?: string | null;
+  footerExternalHref?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -480,6 +900,12 @@ export interface HomeSettingsSelect<T extends boolean = true> {
   heroTitle?: T;
   heroSubtitle?: T;
   heroImage?: T;
+  trustIndicators?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
   stats?:
     | T
     | {
@@ -488,6 +914,30 @@ export interface HomeSettingsSelect<T extends boolean = true> {
         sublabel?: T;
         id?: T;
       };
+  featuresSectionTitle?: T;
+  featuresSectionSubtitle?: T;
+  features?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  partnershipTitle?: T;
+  partnershipBody?: T;
+  partnershipBadges?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  ctaTitle?: T;
+  ctaBody?: T;
+  ctaPrimaryLabel?: T;
+  ctaPrimaryHref?: T;
+  ctaSecondaryLabel?: T;
+  ctaSecondaryHref?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -498,10 +948,46 @@ export interface HomeSettingsSelect<T extends boolean = true> {
  */
 export interface SiteSettingsSelect<T extends boolean = true> {
   siteTitle?: T;
+  siteShortName?: T;
+  siteSuffix?: T;
+  headerPartnerLabel?: T;
+  headerCtaLabel?: T;
   contactEmail?: T;
   contactPhone?: T;
   whatsappNumber?: T;
   address?: T;
+  officeHours?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  footerDescription?: T;
+  footerPartnerLabel?: T;
+  footerDisclaimer?: T;
+  headerNavigation?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        id?: T;
+      };
+  footerQuickLinks?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        id?: T;
+      };
+  footerResourceLinks?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        id?: T;
+      };
+  footerExternalLabel?: T;
+  footerExternalHref?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
