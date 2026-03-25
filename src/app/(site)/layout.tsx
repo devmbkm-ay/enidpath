@@ -7,8 +7,12 @@ export default function SiteLayoutGroup({
   children: React.ReactNode;
 }>) {
   return (
-    <Providers>
-      <SiteLayout>{children}</SiteLayout>
-    </Providers>
+    <html lang="en" suppressHydrationWarning>
+      <body>
+        <Providers>
+          <SiteLayout>{children}</SiteLayout>
+        </Providers>
+      </body>
+    </html>
   );
 }

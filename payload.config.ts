@@ -12,7 +12,6 @@ export default buildConfig({
   admin: {
     importMap: {
       baseDir: dirname,
-      importMapFile: path.resolve(dirname, 'src/app/(payload)/admin/importMap.js'),
     },
     user: 'Users',
   },
@@ -52,7 +51,7 @@ export default buildConfig({
     },
   ],
   editor: lexicalEditor({}),
-  secret: process.env.PAYLOAD_SECRET || 'YOUR_SECRET_HERE',
+  secret: process.env.PAYLOAD_SECRET || 'super-secret-key-123',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },

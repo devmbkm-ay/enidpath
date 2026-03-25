@@ -1,33 +1,21 @@
 import { RootPage } from '@payloadcms/next/views'
-
-import config from '../../../../../payload.config'
+import configPromise from '@payload-config'
 import { importMap } from '../importMap'
 
-type PageProps = {
-  params: Promise<{
-    segments?: string[]
-  }>
-  searchParams: Promise<{
-    [key: string]: string | string[] | undefined
-  }>
+export const dynamic = 'force-dynamic'
+
+type Args = {
+  params: Promise<{ segments: string[] }>
+  searchParams: Promise<{ [key: string]: string | string[] }>
 }
 
-const Page = async ({ params, searchParams }: PageProps) => {
-  const resolvedParams = await params
-  const resolvedSearchParams = await searchParams
-
+const Page = async ({ params, searchParams }: Args) => {
   return (
     <RootPage
-      config={Promise.resolve(config)}
+      config={configPromise}
       importMap={importMap}
-      params={Promise.resolve({
-        segments: Array.isArray(resolvedParams.segments) ? resolvedParams.segments : [],
-      })}
-      searchParams={Promise.resolve(
-        Object.fromEntries(
-          Object.entries(resolvedSearchParams).filter(([, value]) => value !== undefined),
-        ) as Record<string, string | string[]>,
-      )}
+      params={params}
+      searchParams={searchParams}
     />
   )
 }

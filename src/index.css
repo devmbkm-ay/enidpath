@@ -1,3 +1,5 @@
+/* src/index.css */
+
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap');
 
 
@@ -104,7 +106,7 @@
   }
 }
 
-@layer base {
+/* @layer base {
   * {
     @apply border-border;
   }
@@ -123,7 +125,7 @@
     font-family: 'Playfair Display', serif;
     @apply font-semibold tracking-tight;
   }
-}
+} */
 
 @layer components {
   .academic-heading {
