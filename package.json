@@ -10,6 +10,7 @@
         "lint": "eslint .",
         "payload:importmap": "node ./scripts/generate-payload-import-map.mjs",
         "payload:bootstrap-admin": "node ./scripts/bootstrap-payload-admin.mjs",
+        "payload:seed-site-content": "node ./scripts/seed-site-content.mjs",
         "prisma:generate": "prisma generate",
         "prisma:migrate": "prisma migrate dev",
         "prisma:studio": "prisma studio",

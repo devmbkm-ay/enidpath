@@ -72,6 +72,7 @@ cp .env.example .env
 ```sh
 MONGODB_URI=your-mongodb-connection-string
 PAYLOAD_SECRET=your-long-random-secret
+SITE_URL=http://localhost:3000
 ```
 
 3. Start the development server:
@@ -86,6 +87,7 @@ Payload powers the website content, media library, and admin dashboard.
 
 - Admin URL: `/admin`
 - API URL: `/api`
+- Preview links use `SITE_URL` to open the matching frontend page from the CMS
 
 Make sure `MONGODB_URI` points to a reachable MongoDB instance before running
 the app locally or deploying to Vercel.
@@ -133,6 +135,7 @@ Set these environment variables in Vercel:
 
 - `MONGODB_URI`
 - `PAYLOAD_SECRET`
+- `SITE_URL`
 
 If you still use Prisma in production, also set:
 

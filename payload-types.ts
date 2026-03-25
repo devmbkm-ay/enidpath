@@ -263,21 +263,12 @@ export interface Page {
    * Supporting text shown below the hero title.
    */
   heroSubtitle?: string | null;
-  content?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
+  ctaTitle?: string | null;
+  ctaBody?: string | null;
+  ctaPrimaryLabel?: string | null;
+  ctaPrimaryHref?: string | null;
+  ctaSecondaryLabel?: string | null;
+  ctaSecondaryHref?: string | null;
   overviewTitle?: string | null;
   overviewParagraphs?:
     | {
@@ -323,6 +314,53 @@ export interface Page {
   partnershipBody?: string | null;
   partnershipButtonLabel?: string | null;
   partnershipButtonHref?: string | null;
+  serviceNoteText?: string | null;
+  servicesSectionTitle?: string | null;
+  servicesSectionSubtitle?: string | null;
+  serviceCards?:
+    | {
+        icon?:
+          | (
+              | 'award'
+              | 'book-open'
+              | 'clock'
+              | 'credit-card'
+              | 'eye'
+              | 'file-text'
+              | 'globe'
+              | 'graduation-cap'
+              | 'headphones'
+              | 'heart'
+              | 'lightbulb'
+              | 'message-circle'
+              | 'shield'
+              | 'target'
+              | 'trending-up'
+              | 'user-check'
+              | 'users'
+            )
+          | null;
+        title: string;
+        description: string;
+        features?:
+          | {
+              text: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  processSectionTitle?: string | null;
+  processSectionSubtitle?: string | null;
+  processSteps?:
+    | {
+        step: string;
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
   reasonsSectionTitle?: string | null;
   reasonsSectionSubtitle?: string | null;
   reasons?:
@@ -369,53 +407,6 @@ export interface Page {
   commitmentBadges?:
     | {
         text: string;
-        id?: string | null;
-      }[]
-    | null;
-  serviceNoteText?: string | null;
-  servicesSectionTitle?: string | null;
-  servicesSectionSubtitle?: string | null;
-  serviceCards?:
-    | {
-        icon?:
-          | (
-              | 'award'
-              | 'book-open'
-              | 'clock'
-              | 'credit-card'
-              | 'eye'
-              | 'file-text'
-              | 'globe'
-              | 'graduation-cap'
-              | 'headphones'
-              | 'heart'
-              | 'lightbulb'
-              | 'message-circle'
-              | 'shield'
-              | 'target'
-              | 'trending-up'
-              | 'user-check'
-              | 'users'
-            )
-          | null;
-        title: string;
-        description: string;
-        features?:
-          | {
-              text: string;
-              id?: string | null;
-            }[]
-          | null;
-        id?: string | null;
-      }[]
-    | null;
-  processSectionTitle?: string | null;
-  processSectionSubtitle?: string | null;
-  processSteps?:
-    | {
-        step: string;
-        title: string;
-        description: string;
         id?: string | null;
       }[]
     | null;
@@ -478,12 +469,21 @@ export interface Page {
     | null;
   affordabilityTitle?: string | null;
   affordabilityBody?: string | null;
-  ctaTitle?: string | null;
-  ctaBody?: string | null;
-  ctaPrimaryLabel?: string | null;
-  ctaPrimaryHref?: string | null;
-  ctaSecondaryLabel?: string | null;
-  ctaSecondaryHref?: string | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -651,7 +651,12 @@ export interface PagesSelect<T extends boolean = true> {
   heroBadge?: T;
   heroTitle?: T;
   heroSubtitle?: T;
-  content?: T;
+  ctaTitle?: T;
+  ctaBody?: T;
+  ctaPrimaryLabel?: T;
+  ctaPrimaryHref?: T;
+  ctaSecondaryLabel?: T;
+  ctaSecondaryHref?: T;
   overviewTitle?: T;
   overviewParagraphs?:
     | T
@@ -677,6 +682,33 @@ export interface PagesSelect<T extends boolean = true> {
   partnershipBody?: T;
   partnershipButtonLabel?: T;
   partnershipButtonHref?: T;
+  serviceNoteText?: T;
+  servicesSectionTitle?: T;
+  servicesSectionSubtitle?: T;
+  serviceCards?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        description?: T;
+        features?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  processSectionTitle?: T;
+  processSectionSubtitle?: T;
+  processSteps?:
+    | T
+    | {
+        step?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
   reasonsSectionTitle?: T;
   reasonsSectionSubtitle?: T;
   reasons?:
@@ -704,33 +736,6 @@ export interface PagesSelect<T extends boolean = true> {
     | T
     | {
         text?: T;
-        id?: T;
-      };
-  serviceNoteText?: T;
-  servicesSectionTitle?: T;
-  servicesSectionSubtitle?: T;
-  serviceCards?:
-    | T
-    | {
-        icon?: T;
-        title?: T;
-        description?: T;
-        features?:
-          | T
-          | {
-              text?: T;
-              id?: T;
-            };
-        id?: T;
-      };
-  processSectionTitle?: T;
-  processSectionSubtitle?: T;
-  processSteps?:
-    | T
-    | {
-        step?: T;
-        title?: T;
-        description?: T;
         id?: T;
       };
   formTitle?: T;
@@ -772,12 +777,7 @@ export interface PagesSelect<T extends boolean = true> {
       };
   affordabilityTitle?: T;
   affordabilityBody?: T;
-  ctaTitle?: T;
-  ctaBody?: T;
-  ctaPrimaryLabel?: T;
-  ctaPrimaryHref?: T;
-  ctaSecondaryLabel?: T;
-  ctaSecondaryHref?: T;
+  content?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -925,9 +925,6 @@ export interface SiteSetting {
         id?: string | null;
       }[]
     | null;
-  footerDescription?: string | null;
-  footerPartnerLabel?: string | null;
-  footerDisclaimer?: string | null;
   headerNavigation?:
     | {
         label: string;
@@ -949,6 +946,9 @@ export interface SiteSetting {
         id?: string | null;
       }[]
     | null;
+  footerDescription?: string | null;
+  footerPartnerLabel?: string | null;
+  footerDisclaimer?: string | null;
   footerExternalLabel?: string | null;
   footerExternalHref?: string | null;
   updatedAt?: string | null;
@@ -1024,9 +1024,6 @@ export interface SiteSettingsSelect<T extends boolean = true> {
         text?: T;
         id?: T;
       };
-  footerDescription?: T;
-  footerPartnerLabel?: T;
-  footerDisclaimer?: T;
   headerNavigation?:
     | T
     | {
@@ -1048,6 +1045,9 @@ export interface SiteSettingsSelect<T extends boolean = true> {
         href?: T;
         id?: T;
       };
+  footerDescription?: T;
+  footerPartnerLabel?: T;
+  footerDisclaimer?: T;
   footerExternalLabel?: T;
   footerExternalHref?: T;
   updatedAt?: T;
