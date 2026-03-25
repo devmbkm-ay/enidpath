@@ -1,5 +1,6 @@
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { plugin as importExportPlugin } from 'payload-plugin-import-export'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
@@ -7,6 +8,17 @@ import sharp from 'sharp'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
+const isDevelopment = process.env.NODE_ENV === 'development'
+
+function getMongoTimeoutMs() {
+  const rawValue = Number(process.env.MONGODB_SERVER_SELECTION_TIMEOUT_MS)
+
+  if (Number.isFinite(rawValue) && rawValue > 0) {
+    return rawValue
+  }
+
+  return isDevelopment ? 3000 : 10000
+}
 
 const iconOptions = [
   'award',
@@ -442,6 +454,17 @@ export default buildConfig({
   },
   db: mongooseAdapter({
     url: process.env.MONGODB_URI || 'mongodb://127.0.0.1/enidpath',
+    connectOptions: {
+      connectTimeoutMS: getMongoTimeoutMs(),
+      serverSelectionTimeoutMS: getMongoTimeoutMs(),
+      socketTimeoutMS: getMongoTimeoutMs(),
+    },
   }),
+  plugins: [
+    importExportPlugin({
+      enabled: true,
+      excludeCollections: ['Users'],
+    }),
+  ],
   sharp,
 })
