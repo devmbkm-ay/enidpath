@@ -63,6 +63,12 @@ const ctaFields = [
 
 export default buildConfig({
   admin: {
+    components: {
+      graphics: {
+        Logo: '/src/components/admin/Logo.tsx#Logo',
+        Icon: '/src/components/admin/Icon.tsx#Icon',
+      },
+    },
     importMap: {
       baseDir: dirname,
     },

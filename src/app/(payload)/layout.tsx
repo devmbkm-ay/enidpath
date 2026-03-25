@@ -2,6 +2,7 @@ import { RootLayout } from '@payloadcms/next/layouts'
 import React from 'react'
 
 import '@payloadcms/next/css'
+import './custom-admin.css'
 import configPromise from '@payload-config'
 import { importMap } from './admin/importMap'
 import { payloadAdminServerFunction } from './serverFunction'
