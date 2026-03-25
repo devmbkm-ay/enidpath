@@ -1,6 +1,7 @@
 
 ## Project info
-
+This project uses Next.js for the frontend and Payload CMS with MongoDB for the
+website content and admin dashboard.
 
 ## How can I edit this code?
 
@@ -54,12 +55,11 @@ This project is built with:
 - React
 - shadcn-ui
 - Tailwind CSS
-- Prisma
-- PostgreSQL
+- Payload CMS
+- MongoDB
+- Prisma (optional / legacy tooling)
 
-## Prisma Setup
-
-Prisma has been added for database access and migrations.
+## Environment Setup
 
 1. Copy the example environment file:
 
@@ -67,22 +67,45 @@ Prisma has been added for database access and migrations.
 cp .env.example .env
 ```
 
-2. Make sure your PostgreSQL server is running and that `DATABASE_URL` in `.env`
-points to it.
+2. Set the required Payload variables in `.env`:
 
-3. Start the Next.js development server:
+```sh
+MONGODB_URI=your-mongodb-connection-string
+PAYLOAD_SECRET=your-long-random-secret
+```
+
+3. Start the development server:
 
 ```sh
 npm run dev
 ```
 
-4. Generate the Prisma client:
+## Payload Setup
+
+Payload powers the website content, media library, and admin dashboard.
+
+- Admin URL: `/admin`
+- API URL: `/api`
+
+Make sure `MONGODB_URI` points to a reachable MongoDB instance before running
+the app locally or deploying to Vercel.
+
+## Prisma Setup (Optional)
+
+Prisma has been added for database access and migrations.
+
+Only use this section if you still rely on Prisma for separate data workflows.
+
+1. Make sure your PostgreSQL server is running and that `DATABASE_URL` in `.env`
+points to it.
+
+2. Generate the Prisma client:
 
 ```sh
 npm run prisma:generate
 ```
 
-5. After you add your first model in `prisma/schema.prisma`, create a local
+3. After you add your first model in `prisma/schema.prisma`, create a local
 migration:
 
 ```sh
@@ -104,7 +127,26 @@ this project loads `DATABASE_URL` from `.env`.
 
 ## How can I deploy this project?
 
+### Vercel Checklist
 
-Yes, you can!
+Set these environment variables in Vercel:
+
+- `MONGODB_URI`
+- `PAYLOAD_SECRET`
+
+If you still use Prisma in production, also set:
+
+- `DATABASE_URL`
+
+For MongoDB Atlas deployments:
+
+- allow connections from Vercel in Atlas Network Access
+- confirm the database user has permission to the target database
+- verify the connection string includes the correct username, password, and
+  database name
+
+This app reads CMS content at runtime, so the site layout is configured as
+dynamic to avoid build-time prerender failures when the CMS database is not
+available during the build step.
 
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
