@@ -1,6 +1,12 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { MessageCircle, GraduationCap, CreditCard, FileText, UserCheck, HeadphonesIcon, ArrowRight, CheckCircle } from "lucide-react";
+import { getPayload } from "@/lib/payload";
+
+const defaultContent = {
+  heroTitle: "Our Services",
+  heroSubtitle: "Comprehensive student support services designed to guide you from initial enquiry through graduation and beyond.",
+};
 
 const services = [
   {
@@ -71,7 +77,19 @@ const services = [
   },
 ];
 
-export default function Services() {
+export default async function Services() {
+  const payload = await getPayload();
+  const { docs } = await payload.find({
+    collection: 'Pages',
+    where: {
+      slug: {
+        equals: 'services',
+      },
+    },
+  });
+
+  const pageData = docs[0] || defaultContent;
+
   return (
     <div>
       {/* Hero Section */}
@@ -79,10 +97,10 @@ export default function Services() {
         <div className="container">
           <div className="max-w-3xl">
             <h1 className="text-4xl md:text-5xl font-display font-bold text-primary-foreground mb-6">
-              Our Services
+              {pageData.heroTitle || defaultContent.heroTitle}
             </h1>
             <p className="text-xl text-primary-foreground/90 leading-relaxed">
-              Comprehensive student support services designed to guide you from initial enquiry through graduation and beyond.
+              {pageData.heroSubtitle || defaultContent.heroSubtitle}
             </p>
           </div>
         </div>

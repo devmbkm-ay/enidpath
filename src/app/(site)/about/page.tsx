@@ -1,6 +1,12 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Target, Eye, Heart, Shield, Users, Lightbulb, Globe, ArrowRight } from "lucide-react";
+import { getPayload } from "@/lib/payload";
+
+const defaultContent = {
+  heroTitle: "About EnidPath International",
+  heroSubtitle: "Your trusted partner for accessing quality UK higher education. We guide and support international students on their journey to academic success.",
+};
 
 const coreValues = [
   {
@@ -35,7 +41,19 @@ const coreValues = [
   },
 ];
 
-export default function About() {
+export default async function About() {
+  const payload = await getPayload();
+  const { docs } = await payload.find({
+    collection: 'Pages',
+    where: {
+      slug: {
+        equals: 'about',
+      },
+    },
+  });
+
+  const pageData = docs[0] || defaultContent;
+
   return (
     <div>
       {/* Hero Section */}
@@ -43,10 +61,10 @@ export default function About() {
         <div className="container">
           <div className="max-w-3xl">
             <h1 className="text-4xl md:text-5xl font-display font-bold text-primary-foreground mb-6">
-              About EnidPath International
+              {pageData.heroTitle || defaultContent.heroTitle}
             </h1>
             <p className="text-xl text-primary-foreground/90 leading-relaxed">
-              Your trusted partner for accessing quality UK higher education. We guide and support international students on their journey to academic success.
+              {pageData.heroSubtitle || defaultContent.heroSubtitle}
             </p>
           </div>
         </div>

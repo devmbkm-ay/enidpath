@@ -69,6 +69,8 @@ export interface Config {
   collections: {
     Users: User;
     Media: Media;
+    CourseItems: CourseItem;
+    Programmes: Programme;
     Pages: Page;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
@@ -79,6 +81,8 @@ export interface Config {
   collectionsSelect: {
     Users: UsersSelect<false> | UsersSelect<true>;
     Media: MediaSelect<false> | MediaSelect<true>;
+    CourseItems: CourseItemsSelect<false> | CourseItemsSelect<true>;
+    Programmes: ProgrammesSelect<false> | ProgrammesSelect<true>;
     Pages: PagesSelect<false> | PagesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -89,8 +93,14 @@ export interface Config {
     defaultIDType: string;
   };
   fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    HomeSettings: HomeSetting;
+    SiteSettings: SiteSetting;
+  };
+  globalsSelect: {
+    HomeSettings: HomeSettingsSelect<false> | HomeSettingsSelect<true>;
+    SiteSettings: SiteSettingsSelect<false> | SiteSettingsSelect<true>;
+  };
   locale: null;
   widgets: {
     collections: CollectionsWidget;
@@ -165,11 +175,44 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CourseItems".
+ */
+export interface CourseItem {
+  id: string;
+  name: string;
+  level: 'IGCSE' | 'IELTS' | 'Level 3' | 'Level 4' | 'Level 5' | 'Level 4 & 5' | 'Level 6' | 'Level 7';
+  credits?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Programmes".
+ */
+export interface Programme {
+  id: string;
+  level: 'BA Pathway' | 'MBA Pathway';
+  title: string;
+  description: string;
+  features?:
+    | {
+        feature?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "Pages".
  */
 export interface Page {
   id: string;
   title: string;
+  slug: 'about' | 'services' | 'why-choose' | 'contact' | 'courses';
+  heroTitle?: string | null;
+  heroSubtitle?: string | null;
   content?: {
     root: {
       type: string;
@@ -219,6 +262,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'Media';
         value: string | Media;
+      } | null)
+    | ({
+        relationTo: 'CourseItems';
+        value: string | CourseItem;
+      } | null)
+    | ({
+        relationTo: 'Programmes';
+        value: string | Programme;
       } | null)
     | ({
         relationTo: 'Pages';
@@ -308,10 +359,41 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CourseItems_select".
+ */
+export interface CourseItemsSelect<T extends boolean = true> {
+  name?: T;
+  level?: T;
+  credits?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Programmes_select".
+ */
+export interface ProgrammesSelect<T extends boolean = true> {
+  level?: T;
+  title?: T;
+  description?: T;
+  features?:
+    | T
+    | {
+        feature?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "Pages_select".
  */
 export interface PagesSelect<T extends boolean = true> {
   title?: T;
+  slug?: T;
+  heroTitle?: T;
+  heroSubtitle?: T;
   content?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -355,6 +437,74 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HomeSettings".
+ */
+export interface HomeSetting {
+  id: string;
+  heroTitle: string;
+  heroSubtitle: string;
+  heroImage?: (string | null) | Media;
+  stats?:
+    | {
+        value?: string | null;
+        label?: string | null;
+        sublabel?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SiteSettings".
+ */
+export interface SiteSetting {
+  id: string;
+  siteTitle?: string | null;
+  contactEmail?: string | null;
+  contactPhone?: string | null;
+  whatsappNumber?: string | null;
+  address?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HomeSettings_select".
+ */
+export interface HomeSettingsSelect<T extends boolean = true> {
+  heroTitle?: T;
+  heroSubtitle?: T;
+  heroImage?: T;
+  stats?:
+    | T
+    | {
+        value?: T;
+        label?: T;
+        sublabel?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SiteSettings_select".
+ */
+export interface SiteSettingsSelect<T extends boolean = true> {
+  siteTitle?: T;
+  contactEmail?: T;
+  contactPhone?: T;
+  whatsappNumber?: T;
+  address?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

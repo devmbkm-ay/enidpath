@@ -1,6 +1,12 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Shield, Award, Users, Globe, Clock, CreditCard, HeadphonesIcon, CheckCircle, ArrowRight, Star } from "lucide-react";
+import { getPayload } from "@/lib/payload";
+
+const defaultContent = {
+  heroTitle: "Why Choose EnidPath International?",
+  heroSubtitle: "Discover why students trust us as their recruitment and support partner for accessing UK-accredited programmes delivered by Online Business School.",
+};
 
 const reasons = [
   {
@@ -44,7 +50,19 @@ const testimonialPoints = [
   "Long-term relationship focus",
 ];
 
-export default function WhyChoose() {
+export default async function WhyChoose() {
+  const payload = await getPayload();
+  const { docs } = await payload.find({
+    collection: 'Pages',
+    where: {
+      slug: {
+        equals: 'why-choose',
+      },
+    },
+  });
+
+  const pageData = docs[0] || defaultContent;
+
   return (
     <div>
       {/* Hero Section */}
@@ -52,10 +70,10 @@ export default function WhyChoose() {
         <div className="container">
           <div className="max-w-3xl">
             <h1 className="text-4xl md:text-5xl font-display font-bold text-primary-foreground mb-6">
-              Why Choose EnidPath International?
+              {pageData.heroTitle || defaultContent.heroTitle}
             </h1>
             <p className="text-xl text-primary-foreground/90 leading-relaxed">
-              Discover why students trust us as their recruitment and support partner for accessing UK-accredited programmes delivered by Online Business School.
+              {pageData.heroSubtitle || defaultContent.heroSubtitle}
             </p>
           </div>
         </div>

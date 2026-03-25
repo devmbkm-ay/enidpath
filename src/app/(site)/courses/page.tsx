@@ -1,13 +1,11 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useState } from "react";
 import { BookOpen, GraduationCap, Filter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { courses, courseLevels } from "@/data/courses";
-import { CourseLevel } from "@/types/course";
 
 const levelDescriptions: Record<string, string> = {
   "IGCSE": "International General Certificate of Secondary Education",
@@ -20,8 +18,43 @@ const levelDescriptions: Record<string, string> = {
   "Level 7": "Master's Degree Level",
 };
 
+const defaultContent = {
+  heroTitle: "Available Courses",
+  heroSubtitle: "Explore the full range of UK-accredited programmes delivered by Online Business School (UK). EnidPath International provides guidance and support throughout your learning journey.",
+};
+
 const Courses = () => {
+  const [courses, setCourses] = useState<any[]>([]);
+  const [pageData, setPageData] = useState<any>(defaultContent);
   const [selectedLevel, setSelectedLevel] = useState<string>("All");
+  const [courseLevels, setCourseLevels] = useState<string[]>(["All"]);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const [coursesRes, pageRes] = await Promise.all([
+          fetch('/api/CourseItems?limit=100'),
+          fetch('/api/Pages?where[slug][equals]=courses')
+        ]);
+        
+        const coursesData = await coursesRes.json();
+        const pageData = await pageRes.json();
+
+        if (coursesData.docs) {
+          setCourses(coursesData.docs);
+          const levels = ["All", ...new Set(coursesData.docs.map((c: any) => c.level)) as any];
+          setCourseLevels(levels);
+        }
+
+        if (pageData.docs && pageData.docs.length > 0) {
+          setPageData(pageData.docs[0]);
+        }
+      } catch (error) {
+        console.error("Failed to fetch courses:", error);
+      }
+    }
+    fetchData();
+  }, []);
 
   const filteredCourses = selectedLevel === "All"
     ? courses
@@ -33,7 +66,7 @@ const Courses = () => {
     }
     acc[course.level].push(course);
     return acc;
-  }, {} as Record<CourseLevel, typeof courses>);
+  }, {} as Record<string, any[]>);
 
   return (
     <div className="min-h-screen">
@@ -47,11 +80,10 @@ const Courses = () => {
               </div>
             </div>
             <h1 className="text-4xl md:text-5xl font-display font-bold mb-6">
-              Available Courses
+              {pageData.heroTitle || defaultContent.heroTitle}
             </h1>
             <p className="text-xl text-primary-foreground/90 leading-relaxed">
-              Explore the full range of UK-accredited programmes delivered by Online Business School (UK). 
-              EnidPath International provides guidance and support throughout your learning journey.
+              {pageData.heroSubtitle || defaultContent.heroSubtitle}
             </p>
           </div>
         </div>
@@ -70,7 +102,7 @@ const Courses = () => {
                 key={level}
                 variant={selectedLevel === level ? "default" : "outline"}
                 size="sm"
-                onClick={() => setSelectedLevel(level as string)}
+                onClick={() => setSelectedLevel(level)}
                 className="transition-all"
               >
                 {level}

@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, Users, BookOpen, Award, GraduationCap, Globe, Shield, ArrowRight, Phone, Star } from "lucide-react";
-import hero from "@/assets/hero-2.webp";
+import defaultHero from "@/assets/hero-2.webp";
+import { getPayload } from "@/lib/payload";
 
 const trustIndicators = [
   { icon: Award, text: "UK Accredited Programmes" },
@@ -10,39 +11,53 @@ const trustIndicators = [
   { icon: GraduationCap, text: "BA & MBA Pathways" },
 ];
 
-const features = [
-  {
-    icon: BookOpen,
-    title: "UK Accredited Qualifications",
-    description: "Access quality BA and MBA pathway programmes delivered by Online Business School (UK), regulated under the OFQUAL and QCF frameworks.",
-  },
-  {
-    icon: Users,
-    title: "Dedicated Student Support",
-    description: "Receive personalised guidance from application through graduation. Our team is here to support your educational journey every step of the way.",
-  },
-  {
-    icon: Globe,
-    title: "Study From Anywhere",
-    description: "Flexible online learning that fits your schedule. Balance your studies with work and personal commitments without relocating.",
-  },
-];
+export default async function Home() {
+  const payload = await getPayload();
+  
+  const { docs: homeDocs } = await payload.find({
+    collection: 'HomePages',
+    limit: 1,
+    depth: 1,
+  });
 
-const stats = [
-  { value: "£6,000", label: "Full Programme Cost", sublabel: "Less than" },
-  { value: "100%", label: "Online Learning" },
-  { value: "UK", label: "Accredited by OBS" },
-  { value: "24/7", label: "Student Support" },
-];
+  const data = homeDocs[0] || {
+    heroTitle: "Your Gateway to UK Higher Education",
+    heroSubtitle: "Access affordable, accredited BA and MBA pathway programmes from Online Business School (UK). Complete your qualification for less than £6,000 with full student support from EnidPath International.",
+    heroImage: null,
+    stats: [
+      { value: "£6,000", label: "Full Programme Cost", sublabel: "Less than" },
+      { value: "100%", label: "Online Learning" },
+      { value: "UK", label: "Accredited by OBS" },
+      { value: "24/7", label: "Student Support" },
+    ],
+    features: [
+      {
+        title: "UK Accredited Qualifications",
+        description: "Access quality BA and MBA pathway programmes delivered by Online Business School (UK), regulated under the OFQUAL and QCF frameworks.",
+      },
+      {
+        title: "Dedicated Student Support",
+        description: "Receive personalised guidance from application through graduation. Our team is here to support your educational journey every step of the way.",
+      },
+      {
+        title: "Study From Anywhere",
+        description: "Flexible online learning that fits your schedule. Balance your studies with work and personal commitments without relocating.",
+      },
+    ]
+  };
 
-export default function Home() {
+  // Gestion de l'image de fond dynamique
+  const heroImageUrl = data.heroImage && typeof data.heroImage !== 'string' 
+    ? (data.heroImage as any).url 
+    : defaultHero.src;
+
   return (
     <div>
       {/* Hero Section */}
       <section className="relative min-h-[85vh] flex items-center">
         <div
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${hero.src})` }}
+          style={{ backgroundImage: `url(${heroImageUrl})` }}
         >
           <div className="absolute inset-0 gradient-overlay" />
         </div>
@@ -55,12 +70,11 @@ export default function Home() {
             </div>
 
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-primary-foreground mb-6 leading-tight">
-              Your Gateway to <span className="text-accent">UK Higher Education</span>
+              {data.heroTitle}
             </h1>
 
             <p className="text-lg md:text-xl text-primary-foreground/90 mb-8 max-w-2xl leading-relaxed">
-              Access affordable, accredited BA and MBA pathway programmes from Online Business School (UK).
-              Complete your qualification for less than £6,000 with full student support from EnidPath International.
+              {data.heroSubtitle}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 mb-12">
@@ -78,7 +92,7 @@ export default function Home() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {trustIndicators.map((item, index) => (
                 <div
-                  key={item.text}
+                  key={`${item.text}-${index}`}
                   className="flex items-center gap-3 text-primary-foreground/90 animate-fade-in"
                   style={{ animationDelay: `${0.2 + index * 0.1}s` }}
                 >
@@ -95,8 +109,11 @@ export default function Home() {
       <section className="bg-primary py-8">
         <div className="container">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {stats.map((stat) => (
-              <div key={stat.label} className="text-center">
+            {data.stats.map((stat: any, index: number) => (
+              <div
+                key={stat.id ?? `${stat.label ?? 'stat'}-${index}`}
+                className="text-center"
+              >
                 {stat.sublabel && (
                   <div className="text-sm text-primary-foreground/60">{stat.sublabel}</div>
                 )}
@@ -121,13 +138,16 @@ export default function Home() {
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
+            {data.features.map((feature: any, index: number) => (
               <div
-                key={feature.title}
+                key={feature.id ?? `${feature.title ?? 'feature'}-${index}`}
                 className="bg-card p-8 rounded-lg card-shadow hover:shadow-lg transition-shadow duration-300"
               >
                 <div className="w-14 h-14 rounded-lg bg-secondary/10 flex items-center justify-center mb-6">
-                  <feature.icon className="h-7 w-7 text-secondary" />
+                  {/* Utilisation d'icônes par défaut selon l'index pour simplifier */}
+                  {index === 0 && <BookOpen className="h-7 w-7 text-secondary" />}
+                  {index === 1 && <Users className="h-7 w-7 text-secondary" />}
+                  {index >= 2 && <Globe className="h-7 w-7 text-secondary" />}
                 </div>
                 <h3 className="text-xl font-display font-semibold text-foreground mb-3">
                   {feature.title}

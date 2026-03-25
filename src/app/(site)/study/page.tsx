@@ -1,17 +1,18 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { GraduationCap, BookOpen, Award, Clock, Globe, CheckCircle, ArrowRight, TrendingUp } from "lucide-react";
+import { GraduationCap, BookOpen, Clock, Globe, CheckCircle, ArrowRight, TrendingUp, Award } from "lucide-react";
+import { getPayload } from "@/lib/payload";
 
-const programmes = [
+const defaultProgrammes = [
   {
     level: "BA Pathway",
     title: "Business Management Pathway",
     description: "Build a strong foundation in business principles and management practices with this comprehensive undergraduate pathway programme.",
     features: [
-      "Foundation to degree-level progression",
-      "Business fundamentals and strategy",
-      "Leadership and management skills",
-      "Flexible online learning",
+      { feature: "Foundation to degree-level progression" },
+      { feature: "Business fundamentals and strategy" },
+      { feature: "Leadership and management skills" },
+      { feature: "Flexible online learning" },
     ],
   },
   {
@@ -19,10 +20,10 @@ const programmes = [
     title: "Master of Business Administration Pathway",
     description: "Advance your career with a prestigious MBA pathway programme designed for working professionals seeking leadership roles.",
     features: [
-      "Advanced business strategy",
-      "Global leadership skills",
-      "Strategic management focus",
-      "Industry-relevant curriculum",
+      { feature: "Advanced business strategy" },
+      { feature: "Global leadership skills" },
+      { feature: "Strategic management focus" },
+      { feature: "Industry-relevant curriculum" },
     ],
   },
 ];
@@ -50,7 +51,15 @@ const benefits = [
   },
 ];
 
-export default function Study() {
+export default async function Study() {
+  const payload = await getPayload();
+  const { docs: programmes } = await payload.find({
+    collection: 'Programmes',
+    limit: 100,
+  });
+
+  const displayProgrammes = programmes.length > 0 ? programmes : defaultProgrammes;
+
   return (
     <div>
       {/* Hero Section */}
@@ -123,7 +132,7 @@ export default function Study() {
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
-            {programmes.map((programme) => (
+            {displayProgrammes.map((programme: any) => (
               <div 
                 key={programme.title}
                 className="bg-card p-8 rounded-lg card-shadow hover:shadow-lg transition-shadow duration-300"
@@ -139,10 +148,10 @@ export default function Study() {
                   {programme.description}
                 </p>
                 <ul className="space-y-3 mb-8">
-                  {programme.features.map((feature) => (
-                    <li key={feature} className="flex items-center gap-3">
+                  {programme.features.map((featureObj: any) => (
+                    <li key={featureObj.feature} className="flex items-center gap-3">
                       <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0" />
-                      <span className="text-foreground">{feature}</span>
+                      <span className="text-foreground">{featureObj.feature}</span>
                     </li>
                   ))}
                 </ul>

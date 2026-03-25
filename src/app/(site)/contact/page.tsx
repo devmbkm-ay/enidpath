@@ -1,41 +1,21 @@
-"use client";
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { MapPin, Phone, Mail, Clock, MessageCircle, Send, CheckCircle } from "lucide-react";
 import { toast } from "sonner";
+import { getPayload } from "@/lib/payload";
 
-const contactInfo = [
-  {
-    icon: MapPin,
-    title: "Office Location",
-    details: ["Kampala, Uganda"],
-    description: "Visit us for in-person consultations",
-  },
-  {
-    icon: Phone,
-    title: "Phone & WhatsApp",
-    details: ["+256 700 000 000"],
-    description: "Call or WhatsApp for quick responses",
-  },
-  {
-    icon: Mail,
-    title: "Email",
-    details: ["info@enidpath.com"],
-    description: "For detailed enquiries and documentation",
-  },
-  {
-    icon: Clock,
-    title: "Office Hours",
-    details: ["Mon - Fri: 9:00 AM - 6:00 PM", "Sat: 9:00 AM - 1:00 PM"],
-    description: "We're here to help",
-  },
-];
+const defaultContent = {
+  heroTitle: "Contact Us",
+  heroSubtitle: "Ready to start your educational journey? Get in touch with our team for personalised guidance and support.",
+};
 
 export default function Contact() {
+  const [pageData, setPageData] = useState<any>(defaultContent);
+  const [siteSettings, setSiteSettings] = useState<any>({});
+  
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -44,6 +24,25 @@ export default function Contact() {
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch('/api/globals/SiteSettings');
+        const settings = await response.json();
+        setSiteSettings(settings);
+
+        const pageResponse = await fetch('/api/Pages?where[slug][equals]=contact');
+        const pages = await pageResponse.json();
+        if (pages.docs && pages.docs.length > 0) {
+          setPageData(pages.docs[0]);
+        }
+      } catch (error) {
+        console.error("Failed to fetch contact data:", error);
+      }
+    }
+    fetchData();
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -68,6 +67,33 @@ export default function Contact() {
     setIsSubmitting(false);
   };
 
+  const contactInfo = [
+    {
+      icon: MapPin,
+      title: "Office Location",
+      details: [siteSettings.address || "Kampala, Uganda"],
+      description: "Visit us for in-person consultations",
+    },
+    {
+      icon: Phone,
+      title: "Phone & WhatsApp",
+      details: [siteSettings.contactPhone || "+256 700 000 000"],
+      description: "Call or WhatsApp for quick responses",
+    },
+    {
+      icon: Mail,
+      title: "Email",
+      details: [siteSettings.contactEmail || "info@enidpath.com"],
+      description: "For detailed enquiries and documentation",
+    },
+    {
+      icon: Clock,
+      title: "Office Hours",
+      details: ["Mon - Fri: 9:00 AM - 6:00 PM", "Sat: 9:00 AM - 1:00 PM"],
+      description: "We're here to help",
+    },
+  ];
+
   return (
     <div>
       {/* Hero Section */}
@@ -75,10 +101,10 @@ export default function Contact() {
         <div className="container">
           <div className="max-w-3xl">
             <h1 className="text-4xl md:text-5xl font-display font-bold text-primary-foreground mb-6">
-              Contact Us
+              {pageData.heroTitle || defaultContent.heroTitle}
             </h1>
             <p className="text-xl text-primary-foreground/90 leading-relaxed">
-              Ready to start your educational journey? Get in touch with our team for personalised guidance and support.
+              {pageData.heroSubtitle || defaultContent.heroSubtitle}
             </p>
           </div>
         </div>
@@ -213,7 +239,7 @@ export default function Contact() {
                       For faster responses, reach out to us on WhatsApp. We typically respond within minutes during office hours.
                     </p>
                     <Button variant="outline" size="sm" asChild>
-                      <a href="https://wa.me/256700000000" target="_blank" rel="noopener noreferrer">
+                      <a href={`https://wa.me/${siteSettings.whatsappNumber || "256700000000"}`} target="_blank" rel="noopener noreferrer">
                         Chat on WhatsApp
                       </a>
                     </Button>
