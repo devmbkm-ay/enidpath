@@ -1,14 +1,9 @@
 import CoursesClient, { defaultCoursesContent } from "./CoursesClient";
-import { getPayload } from "@/lib/payload";
-import { getPageContent } from "@/lib/site-content";
+import { getCollectionDocs, getPageContent } from "@/lib/site-content";
 
 export default async function CoursesPage() {
-  const payload = await getPayload();
-  const [{ docs: courses }, pageContent] = await Promise.all([
-    payload.find({
-      collection: "CourseItems",
-      limit: 100,
-    }),
+  const [courses, pageContent] = await Promise.all([
+    getCollectionDocs("CourseItems"),
     getPageContent("courses"),
   ]);
 

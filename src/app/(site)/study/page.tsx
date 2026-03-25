@@ -1,8 +1,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { GraduationCap, BookOpen, Clock, Globe, CheckCircle, ArrowRight, TrendingUp, Award } from "lucide-react";
-import { getPayload } from "@/lib/payload";
-import { getPageContent } from "@/lib/site-content";
+import { getCollectionDocs, getPageContent } from "@/lib/site-content";
 import { resolveSiteIcon } from "@/lib/site-icons";
 
 const defaultProgrammes = [
@@ -93,13 +92,10 @@ const defaultStudyContent = {
 };
 
 export default async function Study() {
-  const payload = await getPayload();
-  const { docs: programmes } = await payload.find({
-    collection: 'Programmes',
-    limit: 100,
-  });
-
-  const pageContent = await getPageContent("study");
+  const [programmes, pageContent] = await Promise.all([
+    getCollectionDocs("Programmes"),
+    getPageContent("study"),
+  ]);
   const displayProgrammes = programmes.length > 0 ? programmes : defaultProgrammes;
   const pageData = {
     ...defaultStudyContent,

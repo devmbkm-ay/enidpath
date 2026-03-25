@@ -63,14 +63,6 @@ const ctaFields = [
 
 export default buildConfig({
   admin: {
-    components: {
-      views: {
-        dashboard: {
-          Component:
-            './src/app/(payload)/admin/components/EditorDashboard.tsx#EditorDashboard',
-        },
-      },
-    },
     importMap: {
       baseDir: dirname,
     },

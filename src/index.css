@@ -106,7 +106,7 @@
   }
 }
 
-@layer base {
+/* @layer base {
   * {
     @apply border-border;
   }
@@ -125,7 +125,7 @@
     font-family: 'Playfair Display', serif;
     @apply font-semibold tracking-tight;
   }
-}
+} */
 
 @layer components {
   .academic-heading {

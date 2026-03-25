@@ -1,35 +1,67 @@
 import { getPayload } from "@/lib/payload";
 import { defaultSiteSettings } from "@/lib/site-settings";
 
-export async function getPageContent(slug: string) {
-  const payload = await getPayload();
-  const { docs } = await payload.find({
-    collection: "Pages",
-    where: {
-      slug: {
-        equals: slug,
-      },
-    },
-    limit: 1,
-  });
+function logContentLoadError(scope: string, error: unknown) {
+  console.error(`[site-content] Failed to load ${scope}`, error);
+}
 
-  return docs[0] ?? null;
+export async function getPageContent(slug: string) {
+  try {
+    const payload = await getPayload();
+    const { docs } = await payload.find({
+      collection: "Pages",
+      overrideAccess: true,
+      where: {
+        slug: {
+          equals: slug,
+        },
+      },
+      limit: 1,
+    });
+
+    return docs[0] ?? null;
+  } catch (error) {
+    logContentLoadError(`page content for "${slug}"`, error);
+    return null;
+  }
 }
 
 export async function getHomeContent() {
-  const payload = await getPayload();
-  return payload.findGlobal({
-    slug: "HomeSettings",
-    depth: 1,
-  });
+  try {
+    const payload = await getPayload();
+    return await payload.findGlobal({
+      slug: "HomeSettings",
+      depth: 1,
+      overrideAccess: true,
+    });
+  } catch (error) {
+    logContentLoadError("home settings", error);
+    return null;
+  }
+}
+
+export async function getCollectionDocs<T>(collection: "CourseItems" | "Programmes") {
+  try {
+    const payload = await getPayload();
+    const { docs } = await payload.find({
+      collection,
+      limit: 100,
+      overrideAccess: true,
+    });
+
+    return docs as T[];
+  } catch (error) {
+    logContentLoadError(`${collection} collection`, error);
+    return [] as T[];
+  }
 }
 
 export async function getSiteSettings() {
-  const payload = await getPayload();
-
   try {
+    const payload = await getPayload();
     const settings = await payload.findGlobal({
       slug: "SiteSettings",
+      overrideAccess: true,
     });
 
     return {
@@ -52,7 +84,8 @@ export async function getSiteSettings() {
           ? settings.footerResourceLinks
           : defaultSiteSettings.footerResourceLinks,
     };
-  } catch {
+  } catch (error) {
+    logContentLoadError("site settings", error);
     return defaultSiteSettings;
   }
 }
