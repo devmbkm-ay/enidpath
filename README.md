@@ -57,35 +57,6 @@ This project is built with:
 - Prisma
 - PostgreSQL
 
-## Local Postgres
-
-For local database development, this project includes a `docker-compose.yml`
-file that starts PostgreSQL 16.
-
-1. Copy the example environment file:
-
-```sh
-cp .env.example .env
-```
-
-2. Start Postgres:
-
-```sh
-docker compose up -d
-```
-
-3. Stop it when you're done:
-
-```sh
-docker compose down
-```
-
-The default local connection string is:
-
-```sh
-postgresql://postgres:postgres@localhost:5432/enidpath
-```
-
 ## Prisma Setup
 
 Prisma has been added for database access and migrations.
@@ -96,11 +67,8 @@ Prisma has been added for database access and migrations.
 cp .env.example .env
 ```
 
-2. Start Postgres:
-
-```sh
-docker compose up -d
-```
+2. Make sure your PostgreSQL server is running and that `DATABASE_URL` in `.env`
+points to it.
 
 3. Start the Next.js development server:
 
