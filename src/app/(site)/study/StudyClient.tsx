@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import heroCampus from "@/assets/hero-campus.jpg";
 import {
   ArrowRight,
   Award,
@@ -132,6 +133,10 @@ type TextItem = {
   text?: string;
 };
 
+type HeroImage = {
+  url?: string;
+} | null | string;
+
 type Programme = {
   description?: string;
   features?: TextItem[];
@@ -150,6 +155,7 @@ type StudyBenefit = {
 
 type StudyPageData = typeof defaultStudyContent & {
   aboutParagraphs?: TextItem[];
+  heroImage?: HeroImage;
   studyBenefits?: StudyBenefit[];
 };
 
@@ -173,11 +179,20 @@ export default function StudyClient({
     studyBenefits:
       livePageData.studyBenefits?.length ? livePageData.studyBenefits : defaultBenefits,
   };
+  const heroImage =
+    typeof pageData.heroImage === "string"
+      ? pageData.heroImage
+      : pageData.heroImage?.url || heroCampus.src;
 
   return (
     <div>
-      <section className="bg-primary py-20">
-        <div className="container">
+      <section className="relative overflow-hidden py-20">
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${heroImage})` }}
+        />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(15,23,42,0.72)_0%,rgba(15,23,42,0.84)_100%)]" />
+        <div className="container relative z-10">
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 bg-primary-foreground/10 border border-primary-foreground/20 rounded-full px-4 py-2 mb-6">
               <GraduationCap className="h-4 w-4 text-accent" />

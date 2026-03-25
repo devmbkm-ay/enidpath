@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import heroCampus from "@/assets/hero-campus.jpg";
 import {
   ArrowRight,
   CheckCircle,
@@ -127,6 +128,10 @@ type TextItem = {
   text?: string;
 };
 
+type HeroImage = {
+  url?: string;
+} | null | string;
+
 type ServiceCard = {
   description?: string;
   features?: TextItem[];
@@ -143,6 +148,7 @@ type ProcessStep = {
 };
 
 type ServicesPageData = typeof defaultServicesContent & {
+  heroImage?: HeroImage;
   processSteps?: ProcessStep[];
   serviceCards?: ServiceCard[];
 };
@@ -159,11 +165,20 @@ export default function ServicesClient({
     serviceCards: livePageData.serviceCards?.length ? livePageData.serviceCards : defaultServiceCards,
     processSteps: livePageData.processSteps?.length ? livePageData.processSteps : defaultProcessSteps,
   };
+  const heroImage =
+    typeof pageData.heroImage === "string"
+      ? pageData.heroImage
+      : pageData.heroImage?.url || heroCampus.src;
 
   return (
     <div>
-      <section className="bg-primary py-20">
-        <div className="container">
+      <section className="relative overflow-hidden py-20">
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${heroImage})` }}
+        />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(15,23,42,0.72)_0%,rgba(15,23,42,0.84)_100%)]" />
+        <div className="container relative z-10">
           <Reveal className="max-w-3xl">
             <h1 className="text-4xl md:text-5xl font-display font-bold text-primary-foreground mb-6">
               {pageData.heroTitle || defaultServicesContent.heroTitle}

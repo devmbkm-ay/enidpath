@@ -280,6 +280,14 @@ export default buildConfig({
                 { name: 'heroBadge', type: 'text', admin: { description: 'Optional badge text displayed above the hero title.' } },
                 { name: 'heroTitle', type: 'text', admin: { description: 'Main heading shown at the top of the page.' } },
                 { name: 'heroSubtitle', type: 'textarea', admin: { description: 'Supporting text shown below the hero title.' } },
+                {
+                  name: 'heroImage',
+                  type: 'upload',
+                  relationTo: 'Media',
+                  admin: {
+                    description: 'Optional background image for the page hero. For EnidPath, prefer imagery featuring African students when it fits the page.',
+                  },
+                },
                 ...ctaFields,
               ],
             },

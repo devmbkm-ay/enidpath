@@ -263,6 +263,10 @@ export interface Page {
    * Supporting text shown below the hero title.
    */
   heroSubtitle?: string | null;
+  /**
+   * Optional background image for the page hero. For EnidPath, prefer imagery featuring African students when it fits the page.
+   */
+  heroImage?: (string | null) | Media;
   ctaTitle?: string | null;
   ctaBody?: string | null;
   ctaPrimaryLabel?: string | null;
@@ -651,6 +655,7 @@ export interface PagesSelect<T extends boolean = true> {
   heroBadge?: T;
   heroTitle?: T;
   heroSubtitle?: T;
+  heroImage?: T;
   ctaTitle?: T;
   ctaBody?: T;
   ctaPrimaryLabel?: T;

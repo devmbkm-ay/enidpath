@@ -72,6 +72,7 @@ async function findPageContent(slug: string) {
     `page content for "${slug}"`,
     payload.find({
       collection: "Pages",
+      depth: 1,
       overrideAccess: true,
       where: {
         slug: {

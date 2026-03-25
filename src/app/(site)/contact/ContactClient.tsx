@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import heroCampus from "@/assets/hero-campus.jpg";
 import {
   CheckCircle,
   Clock,
@@ -46,7 +47,13 @@ type SiteSettings = {
   officeHours?: { text?: string }[];
 };
 
-type ContactPageData = typeof defaultContactContent;
+type HeroImage = {
+  url?: string;
+} | null | string;
+
+type ContactPageData = typeof defaultContactContent & {
+  heroImage?: HeroImage;
+};
 
 type ContactClientProps = {
   pageData: ContactPageData;
@@ -67,6 +74,10 @@ export default function ContactClient({
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const heroImage =
+    typeof livePageData.heroImage === "string"
+      ? livePageData.heroImage
+      : livePageData.heroImage?.url || heroCampus.src;
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -126,8 +137,13 @@ export default function ContactClient({
 
   return (
     <div>
-      <section className="bg-primary py-20">
-        <div className="container">
+      <section className="relative overflow-hidden py-20">
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${heroImage})` }}
+        />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(15,23,42,0.72)_0%,rgba(15,23,42,0.84)_100%)]" />
+        <div className="container relative z-10">
           <Reveal className="max-w-3xl">
             <h1 className="mb-6 text-4xl font-display font-bold text-primary-foreground md:text-5xl">
               {livePageData.heroTitle || defaultContactContent.heroTitle}
