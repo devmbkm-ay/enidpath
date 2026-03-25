@@ -6,6 +6,10 @@ import { BookOpen, Filter, GraduationCap } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import {
+  useLivePreviewCollectionDocs,
+  useLivePreviewPageData,
+} from "@/components/LivePreviewProvider";
 
 const levelDescriptions: Record<string, string> = {
   IGCSE: "International General Certificate of Secondary Education",
@@ -58,17 +62,19 @@ export default function CoursesClient({
   courses,
   pageData,
 }: CoursesClientProps) {
+  const liveCourses = useLivePreviewCollectionDocs("CourseItems", courses);
+  const livePageData = useLivePreviewPageData("courses", pageData);
   const [selectedLevel, setSelectedLevel] = useState("All");
 
   const courseLevels = useMemo(
-    () => ["All", ...new Set(courses.map((course) => course.level).filter(Boolean))],
-    [courses],
+    () => ["All", ...new Set(liveCourses.map((course) => course.level).filter(Boolean))],
+    [liveCourses],
   );
 
   const filteredCourses =
     selectedLevel === "All"
-      ? courses
-      : courses.filter((course) => course.level === selectedLevel);
+      ? liveCourses
+      : liveCourses.filter((course) => course.level === selectedLevel);
 
   const groupedCourses = filteredCourses.reduce<Record<string, Course[]>>(
     (acc, course) => {
@@ -82,7 +88,7 @@ export default function CoursesClient({
     {},
   );
 
-  const levelDescriptionMap = (pageData.levelDescriptions || []).reduce(
+  const levelDescriptionMap = (livePageData.levelDescriptions || []).reduce(
     (acc: Record<string, string>, item) => {
       if (item.level && item.description) {
         acc[item.level] = item.description;
@@ -103,10 +109,10 @@ export default function CoursesClient({
               </div>
             </div>
             <h1 className="mb-6 text-4xl font-display font-bold md:text-5xl">
-              {pageData.heroTitle || defaultCoursesContent.heroTitle}
+              {livePageData.heroTitle || defaultCoursesContent.heroTitle}
             </h1>
             <p className="text-xl leading-relaxed text-primary-foreground/90">
-              {pageData.heroSubtitle || defaultCoursesContent.heroSubtitle}
+              {livePageData.heroSubtitle || defaultCoursesContent.heroSubtitle}
             </p>
           </div>
         </div>
@@ -117,7 +123,7 @@ export default function CoursesClient({
           <div className="mb-4 flex items-center gap-3">
             <Filter className="h-5 w-5 text-muted-foreground" />
             <span className="font-medium text-foreground">
-              {pageData.filterLabel || defaultCoursesContent.filterLabel}
+              {livePageData.filterLabel || defaultCoursesContent.filterLabel}
             </span>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -132,7 +138,7 @@ export default function CoursesClient({
                 {level}
                 {level !== "All" && (
                   <Badge variant="secondary" className="ml-2 bg-background/20">
-                    {courses.filter((course) => course.level === level).length}
+                    {liveCourses.filter((course) => course.level === level).length}
                   </Badge>
                 )}
               </Button>
@@ -211,7 +217,7 @@ export default function CoursesClient({
 
           <div className="mt-16 rounded-lg border border-border bg-secondary/50 p-6">
             <p className="text-center text-sm text-muted-foreground">
-              {pageData.disclaimerText || defaultCoursesContent.disclaimerText}
+              {livePageData.disclaimerText || defaultCoursesContent.disclaimerText}
             </p>
           </div>
         </div>
@@ -220,14 +226,14 @@ export default function CoursesClient({
       <section className="bg-primary py-16 text-primary-foreground">
         <div className="container text-center">
           <h2 className="mb-4 text-3xl font-display font-bold">
-            {pageData.ctaTitle || defaultCoursesContent.ctaTitle}
+            {livePageData.ctaTitle || defaultCoursesContent.ctaTitle}
           </h2>
           <p className="mx-auto mb-8 max-w-2xl text-primary-foreground/90">
-            {pageData.ctaBody || defaultCoursesContent.ctaBody}
+            {livePageData.ctaBody || defaultCoursesContent.ctaBody}
           </p>
           <Button variant="accent" size="lg" asChild>
-            <Link href={pageData.ctaPrimaryHref || "/contact"}>
-              {pageData.ctaPrimaryLabel || defaultCoursesContent.ctaPrimaryLabel}
+            <Link href={livePageData.ctaPrimaryHref || "/contact"}>
+              {livePageData.ctaPrimaryLabel || defaultCoursesContent.ctaPrimaryLabel}
             </Link>
           </Button>
         </div>

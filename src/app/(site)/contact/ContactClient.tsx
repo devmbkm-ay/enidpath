@@ -15,6 +15,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  useLivePreviewGlobalData,
+  useLivePreviewPageData,
+} from "@/components/LivePreviewProvider";
 
 export const defaultContactContent = {
   heroTitle: "Contact Us",
@@ -52,6 +56,8 @@ export default function ContactClient({
   pageData,
   siteSettings,
 }: ContactClientProps) {
+  const livePageData = useLivePreviewPageData("contact", pageData);
+  const liveSiteSettings = useLivePreviewGlobalData("SiteSettings", siteSettings);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -89,26 +95,26 @@ export default function ContactClient({
     {
       icon: MapPin,
       title: "Office Location",
-      details: [siteSettings.address || "Kampala, Uganda"],
+      details: [liveSiteSettings.address || "Kampala, Uganda"],
       description: "Visit us for in-person consultations",
     },
     {
       icon: Phone,
       title: "Phone & WhatsApp",
-      details: [siteSettings.contactPhone || "+256 700 000 000"],
+      details: [liveSiteSettings.contactPhone || "+256 700 000 000"],
       description: "Call or WhatsApp for quick responses",
     },
     {
       icon: Mail,
       title: "Email",
-      details: [siteSettings.contactEmail || "info@enidpath.com"],
+      details: [liveSiteSettings.contactEmail || "info@enidpath.com"],
       description: "For detailed enquiries and documentation",
     },
     {
       icon: Clock,
       title: "Office Hours",
       details: (
-        siteSettings.officeHours || [
+        liveSiteSettings.officeHours || [
           { text: "Mon - Fri: 9:00 AM - 6:00 PM" },
           { text: "Sat: 9:00 AM - 1:00 PM" },
         ]
@@ -123,10 +129,10 @@ export default function ContactClient({
         <div className="container">
           <div className="max-w-3xl">
             <h1 className="mb-6 text-4xl font-display font-bold text-primary-foreground md:text-5xl">
-              {pageData.heroTitle || defaultContactContent.heroTitle}
+              {livePageData.heroTitle || defaultContactContent.heroTitle}
             </h1>
             <p className="text-xl leading-relaxed text-primary-foreground/90">
-              {pageData.heroSubtitle || defaultContactContent.heroSubtitle}
+              {livePageData.heroSubtitle || defaultContactContent.heroSubtitle}
             </p>
           </div>
         </div>
@@ -137,10 +143,10 @@ export default function ContactClient({
           <div className="grid gap-16 lg:grid-cols-2">
             <div>
               <h2 className="mb-2 text-2xl font-display font-bold text-foreground">
-                {pageData.formTitle || defaultContactContent.formTitle}
+                {livePageData.formTitle || defaultContactContent.formTitle}
               </h2>
               <p className="mb-8 text-muted-foreground">
-                {pageData.formSubtitle || defaultContactContent.formSubtitle}
+                {livePageData.formSubtitle || defaultContactContent.formSubtitle}
               </p>
 
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -222,10 +228,10 @@ export default function ContactClient({
 
             <div>
               <h2 className="mb-2 text-2xl font-display font-bold text-foreground">
-                {pageData.contactInfoTitle || defaultContactContent.contactInfoTitle}
+                {livePageData.contactInfoTitle || defaultContactContent.contactInfoTitle}
               </h2>
               <p className="mb-8 text-muted-foreground">
-                {pageData.contactInfoSubtitle ||
+                {livePageData.contactInfoSubtitle ||
                   defaultContactContent.contactInfoSubtitle}
               </p>
 
@@ -255,14 +261,14 @@ export default function ContactClient({
                   <MessageCircle className="h-8 w-8 flex-shrink-0 text-green-600" />
                   <div>
                     <h3 className="mb-2 font-semibold text-foreground">
-                      {pageData.whatsappTitle || defaultContactContent.whatsappTitle}
+                      {livePageData.whatsappTitle || defaultContactContent.whatsappTitle}
                     </h3>
                     <p className="mb-4 text-sm text-muted-foreground">
-                      {pageData.whatsappBody || defaultContactContent.whatsappBody}
+                      {livePageData.whatsappBody || defaultContactContent.whatsappBody}
                     </p>
                     <Button variant="outline" size="sm" asChild>
                       <a
-                        href={`https://wa.me/${siteSettings.whatsappNumber || "256700000000"}`}
+                        href={`https://wa.me/${liveSiteSettings.whatsappNumber || "256700000000"}`}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
@@ -285,7 +291,7 @@ export default function ContactClient({
               <span className="font-semibold text-foreground">
                 EnidPath International
               </span>{" "}
-              {pageData.trustBannerText || defaultContactContent.trustBannerText}
+              {livePageData.trustBannerText || defaultContactContent.trustBannerText}
             </p>
           </div>
         </div>
