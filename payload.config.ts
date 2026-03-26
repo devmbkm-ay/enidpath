@@ -1,6 +1,7 @@
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { plugin as importExportPlugin } from 'payload-plugin-import-export'
+import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
@@ -128,7 +129,9 @@ export default buildConfig({
         singular: 'Media Item',
         plural: 'Media Library',
       },
-      upload: true,
+      upload: {
+        staticDir: path.resolve(dirname, 'public/Media'),
+      },
       fields: [
         {
           admin: {
@@ -642,6 +645,13 @@ export default buildConfig({
     },
   }),
   plugins: [
+    vercelBlobStorage({
+      enabled: true,
+      collections: {
+        Media: true,
+      },
+      token: process.env.BLOB_READ_WRITE_TOKEN,
+    }),
     importExportPlugin({
       enabled: true,
       excludeCollections: ['Users'],
