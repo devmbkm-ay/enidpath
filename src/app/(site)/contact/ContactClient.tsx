@@ -90,17 +90,36 @@ export default function ContactClient({
     e.preventDefault();
     setIsSubmitting(true);
 
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
-    toast.success("Thank you for your enquiry! We will get back to you shortly.");
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      subject: "",
-      message: "",
-    });
-    setIsSubmitting(false);
+      const result = await response.json();
+
+      if (!response.ok) {
+        toast.error(result.error || "We couldn't send your message. Please try again.");
+        return;
+      }
+
+      toast.success("Thank you for your enquiry! We will get back to you shortly.");
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        subject: "",
+        message: "",
+      });
+    } catch (error) {
+      console.error("Failed to submit contact form", error);
+      toast.error("We couldn't send your message. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const contactInfo = [
