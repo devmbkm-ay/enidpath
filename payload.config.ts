@@ -110,6 +110,32 @@ export default buildConfig({
   },
   collections: [
     {
+      slug: 'ContactSubmissions',
+      labels: {
+        singular: 'Contact Submission',
+        plural: 'Contact Submissions',
+      },
+      admin: {
+        description: 'Messages submitted through the contact form on the website.',
+        group: 'Administration',
+        useAsTitle: 'name',
+        defaultColumns: ['name', 'email', 'subject', 'createdAt'],
+      },
+      access: {
+        create: () => true,
+        read: ({ req }) => Boolean(req.user),
+        update: ({ req }) => Boolean(req.user),
+        delete: ({ req }) => Boolean(req.user),
+      },
+      fields: [
+        { name: 'name', type: 'text', required: true },
+        { name: 'email', type: 'email', required: true },
+        { name: 'phone', type: 'text' },
+        { name: 'subject', type: 'text', required: true },
+        { name: 'message', type: 'textarea', required: true },
+      ],
+    },
+    {
       slug: 'Users',
       admin: {
         description: 'Manage admin accounts and login access for the CMS.',

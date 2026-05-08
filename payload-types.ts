@@ -67,6 +67,7 @@ export interface Config {
   };
   blocks: {};
   collections: {
+    ContactSubmissions: ContactSubmission;
     Users: User;
     Media: Media;
     CourseItems: CourseItem;
@@ -79,6 +80,7 @@ export interface Config {
   };
   collectionsJoins: {};
   collectionsSelect: {
+    ContactSubmissions: ContactSubmissionsSelect<false> | ContactSubmissionsSelect<true>;
     Users: UsersSelect<false> | UsersSelect<true>;
     Media: MediaSelect<false> | MediaSelect<true>;
     CourseItems: CourseItemsSelect<false> | CourseItemsSelect<true>;
@@ -128,6 +130,22 @@ export interface UserAuthOperations {
     email: string;
     password: string;
   };
+}
+/**
+ * Messages submitted through the contact form on the website.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContactSubmissions".
+ */
+export interface ContactSubmission {
+  id: string;
+  name: string;
+  email: string;
+  phone?: string | null;
+  subject: string;
+  message: string;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * Manage admin accounts and login access for the CMS.
@@ -516,6 +534,10 @@ export interface PayloadLockedDocument {
   id: string;
   document?:
     | ({
+        relationTo: 'ContactSubmissions';
+        value: string | ContactSubmission;
+      } | null)
+    | ({
         relationTo: 'Users';
         value: string | User;
       } | null)
@@ -576,6 +598,19 @@ export interface PayloadMigration {
   batch?: number | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContactSubmissions_select".
+ */
+export interface ContactSubmissionsSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  phone?: T;
+  subject?: T;
+  message?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

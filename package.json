@@ -11,10 +11,6 @@
         "payload:importmap": "node ./scripts/generate-payload-import-map.mjs",
         "payload:bootstrap-admin": "node ./scripts/bootstrap-payload-admin.mjs",
         "payload:seed-site-content": "node ./scripts/seed-site-content.mjs",
-        "prisma:generate": "prisma generate",
-        "prisma:migrate": "prisma migrate dev",
-        "prisma:studio": "prisma studio",
-        "prisma:push": "prisma db push",
         "preview": "next start",
         "start": "next start"
     },
@@ -24,7 +20,6 @@
         "@payloadcms/next": "^3.80.0",
         "@payloadcms/richtext-lexical": "^3.80.0",
         "@payloadcms/storage-vercel-blob": "^3.80.0",
-        "@prisma/client": "^7.5.0",
         "@radix-ui/react-accordion": "^1.2.11",
         "@radix-ui/react-alert-dialog": "^1.1.14",
         "@radix-ui/react-aspect-ratio": "^1.1.7",
@@ -90,7 +85,6 @@
         "eslint-plugin-react-hooks": "^5.2.0",
         "globals": "^15.15.0",
         "postcss": "^8.5.8",
-        "prisma": "^7.5.0",
         "tailwindcss": "^3.4.19",
         "typescript": "5.9.3",
         "typescript-eslint": "^8.38.0"

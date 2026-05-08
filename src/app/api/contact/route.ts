@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { prisma } from "@/lib/prisma";
+import { getPayload } from "@/lib/payload";
 
+
+// Validation schema for contact form submissions
 const contactSubmissionSchema = z.object({
   name: z.string().trim().min(2, "Name is required").max(120),
   email: z.string().trim().email("Valid email is required").max(255),
@@ -30,8 +32,12 @@ export async function POST(request: Request) {
       );
     }
 
-    await prisma.contactSubmission.create({
-      data: parsed.data,
+    const { name, email, phone, subject, message } = parsed.data;
+    const payload = await getPayload();
+    await payload.create({
+      collection: "ContactSubmissions",
+      data: { name, email, subject, message, ...(phone ? { phone } : {}) },
+      overrideAccess: true,
     });
 
     return NextResponse.json({ success: true }, { status: 201 });
