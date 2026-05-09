@@ -1,4 +1,5 @@
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
+import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { plugin as importExportPlugin } from 'payload-plugin-import-export'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
@@ -657,6 +658,19 @@ export default buildConfig({
       ],
     },
   ],
+  email: nodemailerAdapter({
+    defaultFromAddress: process.env.SMTP_FROM_ADDRESS || 'info@enidpath.com',
+    defaultFromName: process.env.SMTP_FROM_NAME || 'EnidPath International',
+    transportOptions: {
+      host: process.env.SMTP_HOST,
+      port: Number(process.env.SMTP_PORT) || 465,
+      secure: Number(process.env.SMTP_PORT) !== 587,
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
+    },
+  }),
   editor: lexicalEditor({}),
   secret: process.env.PAYLOAD_SECRET || 'super-secret-key-123',
   typescript: {
