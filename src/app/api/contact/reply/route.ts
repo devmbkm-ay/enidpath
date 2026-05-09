@@ -3,7 +3,7 @@ import { headers as nextHeaders } from "next/headers";
 import { getPayload } from "@/lib/payload";
 
 const SITE_URL = process.env.SITE_URL || "https://www.enidpath.com";
-const LOGO_URL = `${SITE_URL}/logo_enidpath.png`;
+const LOGO_URL = `${SITE_URL}/logo_enidpath-tight.png`;
 
 export async function POST(request: Request) {
   try {

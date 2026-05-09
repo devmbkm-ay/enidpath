@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -24,14 +25,14 @@ export function Header({ siteSettings = defaultSiteSettings }: HeaderProps) {
           <div className="flex items-center gap-6">
             <a
               href={`tel:${siteSettings.contactPhone}`}
-              className="motion-link flex items-center gap-2 hover:text-accent transition-colors"
+              className="motion-link flex items-center gap-2 transition-colors hover:text-accent"
             >
               <Phone className="h-4 w-4" />
               <span className="hidden sm:inline">{siteSettings.contactPhone}</span>
             </a>
             <a
               href={`mailto:${siteSettings.contactEmail}`}
-              className="motion-link flex items-center gap-2 hover:text-accent transition-colors"
+              className="motion-link flex items-center gap-2 transition-colors hover:text-accent"
             >
               <Mail className="h-4 w-4" />
               <span className="hidden sm:inline">{siteSettings.contactEmail}</span>
@@ -46,18 +47,18 @@ export function Header({ siteSettings = defaultSiteSettings }: HeaderProps) {
 
       {/* Main navigation */}
       <nav className="container">
-        <div className="flex items-center justify-between py-4">
+        <div className="flex items-center justify-between py-3 lg:py-4">
           {/* Logo */}
-          <Link href="/" className="motion-link flex items-center gap-3">
-            <div className="motion-chip flex h-12 w-12 items-center justify-center rounded-lg bg-primary">
-              <span className="text-primary-foreground font-display font-bold text-xl">EP</span>
-            </div>
-            <div>
-              <div className="font-display font-bold text-xl text-primary">
-                {siteSettings.siteShortName}
-              </div>
-              <div className="text-xs text-muted-foreground">{siteSettings.siteSuffix}</div>
-            </div>
+          <Link href="/" className="motion-link flex items-center">
+            <Image
+              src="/logo_enidpath-tight.png"
+              alt="EnidPath International"
+              width={1039}
+              height={337}
+              sizes="(max-width: 640px) 180px, (max-width: 1024px) 220px, 260px"
+              className="h-12 w-auto object-contain sm:h-14 lg:h-16"
+              priority
+            />
           </Link>
 
           {/* Desktop Navigation */}
@@ -67,7 +68,7 @@ export function Header({ siteSettings = defaultSiteSettings }: HeaderProps) {
                 key={item.label}
                 href={item.href}
                 className={cn(
-                  "px-4 py-2 text-sm font-medium transition-colors rounded-md",
+                  "rounded-md px-4 py-2 text-sm font-medium transition-colors",
                   pathname === item.href
                     ? "text-secondary bg-secondary/10"
                     : "motion-link text-foreground hover:text-secondary hover:bg-muted"

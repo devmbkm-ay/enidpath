@@ -146,7 +146,24 @@ export default function HomeClient({
 
   return (
     <div>
-      <section className="relative flex min-h-[85vh] items-center overflow-hidden">
+      <section className="relative overflow-hidden bg-background pt-4 md:pt-5">
+        <div className="container relative z-20">
+          <div className="flex flex-wrap justify-center gap-3 pb-4 md:pb-5">
+            {data.partnershipBadges.map((badge, index) => (
+              <Reveal
+                key={badge.id ?? `${badge.text}-${index}`}
+                delay={index * 70}
+                className="motion-chip flex items-center gap-2 rounded-full border border-border/70 bg-card/90 px-4 py-2 text-foreground shadow-sm backdrop-blur"
+              >
+                <CheckCircle className="h-5 w-5 text-green-600" />
+                <span className="text-sm font-medium">{badge.text}</span>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+
+        <div className="mx-auto max-w-[1600px] px-3 pb-3 md:px-5 md:pb-5">
+      <section className="relative flex min-h-[85vh] items-center overflow-hidden rounded-[2rem] md:rounded-[2.5rem]">
         <div className="hero-orb hero-orb--gold left-[8%] top-[14%] h-40 w-40 md:h-56 md:w-56" />
         <div className="hero-orb hero-orb--blue bottom-[8%] right-[10%] h-52 w-52 md:h-72 md:w-72" />
         <div
@@ -156,8 +173,8 @@ export default function HomeClient({
           <div className="absolute inset-0 gradient-overlay" />
         </div>
 
-        <div className="container relative z-10 py-20">
-          <div className="hero-sheen max-w-3xl rounded-[2rem] border border-white/10 bg-white/5 p-8 backdrop-blur-[2px] md:p-10 animate-fade-in-up">
+        <div className="container relative z-10 py-16 md:py-20">
+          <div className="hero-sheen max-w-3xl rounded-[2rem] border border-white/10 bg-slate-950/28 p-8 shadow-[0_24px_60px_rgba(15,23,42,0.28)] backdrop-blur-md md:p-10 animate-fade-in-up">
             <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/20 px-4 py-2 motion-chip">
               <Star className="h-4 w-4 text-accent" />
               <span className="text-sm font-medium text-primary-foreground">
@@ -209,6 +226,8 @@ export default function HomeClient({
               })}
             </div>
           </div>
+        </div>
+      </section>
         </div>
       </section>
 
@@ -282,7 +301,7 @@ export default function HomeClient({
                 <Reveal
                   key={badge.id ?? `${badge.text}-${index}`}
                   delay={index * 70}
-                  className="motion-chip flex items-center gap-2 rounded-full bg-card px-4 py-2"
+                  className="motion-chip flex items-center gap-2 rounded-full border border-border/60 bg-card px-4 py-2 shadow-sm"
                 >
                   <CheckCircle className="h-5 w-5 text-green-600" />
                   <span className="text-sm font-medium">{badge.text}</span>

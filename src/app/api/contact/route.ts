@@ -19,7 +19,7 @@ const contactSubmissionSchema = z.object({
 
 const TEAM_EMAIL = process.env.SMTP_FROM_ADDRESS || "info@enidpath.com";
 const SITE_URL = process.env.SITE_URL || "https://www.enidpath.com";
-const LOGO_URL = `${SITE_URL}/logo_enidpath.png`;
+const LOGO_URL = `${SITE_URL}/logo_enidpath-tight.png`;
 
 function notificationHtml(data: {
   name: string;
