@@ -18,6 +18,8 @@ const contactSubmissionSchema = z.object({
 });
 
 const TEAM_EMAIL = process.env.SMTP_FROM_ADDRESS || "info@enidpath.com";
+const SITE_URL = process.env.SITE_URL || "https://www.enidpath.com";
+const LOGO_URL = `${SITE_URL}/logo_enidpath.png`;
 
 function notificationHtml(data: {
   name: string;
@@ -31,6 +33,9 @@ function notificationHtml(data: {
 <html>
 <head><meta charset="utf-8"></head>
 <body style="font-family:Arial,sans-serif;color:#1a1a1a;max-width:600px;margin:0 auto;padding:24px">
+  <div style="text-align:center;margin-bottom:24px">
+    <img src="${LOGO_URL}" alt="EnidPath International" style="height:60px;width:auto;object-fit:contain" />
+  </div>
   <div style="border-left:4px solid #1d4ed8;padding-left:16px;margin-bottom:24px">
     <h2 style="margin:0;color:#1d4ed8">New Contact Form Submission</h2>
     <p style="margin:4px 0 0;color:#6b7280;font-size:14px">EnidPath International — ${new Date().toLocaleString("en-GB", { timeZone: "Africa/Lagos" })}</p>
@@ -74,7 +79,7 @@ function confirmationHtml(name: string) {
 <head><meta charset="utf-8"></head>
 <body style="font-family:Arial,sans-serif;color:#1a1a1a;max-width:600px;margin:0 auto;padding:24px">
   <div style="text-align:center;margin-bottom:32px">
-    <h1 style="color:#1d4ed8;margin-bottom:4px">EnidPath International</h1>
+    <img src="${LOGO_URL}" alt="EnidPath International" style="height:60px;width:auto;object-fit:contain;margin-bottom:8px" /><br/>
     <p style="color:#6b7280;font-size:14px;margin:0">Your Gateway to UK Higher Education</p>
   </div>
 

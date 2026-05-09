@@ -2,6 +2,9 @@ import { NextResponse } from "next/server";
 import { headers as nextHeaders } from "next/headers";
 import { getPayload } from "@/lib/payload";
 
+const SITE_URL = process.env.SITE_URL || "https://www.enidpath.com";
+const LOGO_URL = `${SITE_URL}/logo_enidpath.png`;
+
 export async function POST(request: Request) {
   try {
     const payload = await getPayload();
@@ -26,7 +29,7 @@ export async function POST(request: Request) {
 <head><meta charset="utf-8"></head>
 <body style="font-family:Arial,sans-serif;color:#1a1a1a;max-width:600px;margin:0 auto;padding:24px">
   <div style="text-align:center;margin-bottom:24px">
-    <h1 style="color:#1d4ed8;margin-bottom:4px">EnidPath International</h1>
+    <img src="${LOGO_URL}" alt="EnidPath International" style="height:60px;width:auto;object-fit:contain;margin-bottom:8px" /><br/>
     <p style="color:#6b7280;font-size:14px;margin:0">Your Gateway to UK Higher Education</p>
   </div>
 
