@@ -134,6 +134,16 @@ export default buildConfig({
         { name: 'phone', type: 'text' },
         { name: 'subject', type: 'text', required: true },
         { name: 'message', type: 'textarea', required: true },
+        {
+          name: 'reply',
+          type: 'ui',
+          admin: {
+            disableListColumn: true,
+            components: {
+              Field: '/src/components/admin/ReplyButton.tsx#ReplyButton',
+            },
+          },
+        },
       ],
     },
     {
