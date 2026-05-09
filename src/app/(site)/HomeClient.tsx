@@ -146,24 +146,7 @@ export default function HomeClient({
 
   return (
     <div>
-      <section className="relative overflow-hidden bg-background pt-4 md:pt-5">
-        <div className="container relative z-20">
-          <div className="flex flex-wrap justify-center gap-3 pb-4 md:pb-5">
-            {data.partnershipBadges.map((badge, index) => (
-              <Reveal
-                key={badge.id ?? `${badge.text}-${index}`}
-                delay={index * 70}
-                className="motion-chip flex items-center gap-2 rounded-full border border-border/70 bg-card/90 px-4 py-2 text-foreground shadow-sm backdrop-blur"
-              >
-                <CheckCircle className="h-5 w-5 text-green-600" />
-                <span className="text-sm font-medium">{badge.text}</span>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-
-        <div className="mx-auto max-w-[1600px] px-3 pb-3 md:px-5 md:pb-5">
-      <section className="relative flex min-h-[85vh] items-center overflow-hidden rounded-[2rem] md:rounded-[2.5rem]">
+      <section className="relative flex min-h-[85vh] items-center overflow-hidden">
         <div className="hero-orb hero-orb--gold left-[8%] top-[14%] h-40 w-40 md:h-56 md:w-56" />
         <div className="hero-orb hero-orb--blue bottom-[8%] right-[10%] h-52 w-52 md:h-72 md:w-72" />
         <div
@@ -208,26 +191,7 @@ export default function HomeClient({
               </div>
             </Reveal>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {data.trustIndicators.map((item, index) => {
-                const fallbackIcon = defaultTrustIndicators[index]?.icon ?? Award;
-                const Icon = resolveSiteIcon((item as { icon?: string }).icon, fallbackIcon);
-
-                return (
-                  <Reveal
-                    key={item.id ?? `${item.text}-${index}`}
-                    delay={220 + index * 70}
-                    className="flex items-center gap-3 text-primary-foreground/90"
-                  >
-                    <Icon className="h-5 w-5 text-accent flex-shrink-0" />
-                    <span className="text-sm">{item.text}</span>
-                  </Reveal>
-                );
-              })}
-            </div>
           </div>
-        </div>
-      </section>
         </div>
       </section>
 

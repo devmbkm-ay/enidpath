@@ -47,7 +47,7 @@ export function Header({ siteSettings = defaultSiteSettings }: HeaderProps) {
 
       {/* Main navigation */}
       <nav className="container">
-        <div className="flex items-center justify-between py-3 lg:py-4">
+        <div className="flex items-center justify-between py-1">
           {/* Logo */}
           <Link href="/" className="motion-link flex items-center">
             <Image
@@ -56,7 +56,7 @@ export function Header({ siteSettings = defaultSiteSettings }: HeaderProps) {
               width={1039}
               height={337}
               sizes="(max-width: 640px) 180px, (max-width: 1024px) 220px, 260px"
-              className="h-12 w-auto object-contain sm:h-14 lg:h-16"
+              className="h-14 w-auto object-contain sm:h-16 lg:h-20"
               priority
             />
           </Link>
