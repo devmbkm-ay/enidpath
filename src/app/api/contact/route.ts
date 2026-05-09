@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { getPayload } from "@/lib/payload";
 
+
+// This API route handles contact form submissions. It validates the incoming data, stores it in the Payload CMS, and sends notification emails to both the team and the user who submitted the form.
 const contactSubmissionSchema = z.object({
   name: z.string().trim().min(2, "Name is required").max(120),
   email: z.string().trim().email("Valid email is required").max(255),
