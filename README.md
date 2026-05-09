@@ -57,7 +57,6 @@ This project is built with:
 - Tailwind CSS
 - Payload CMS
 - MongoDB
-- Prisma (optional / legacy tooling)
 
 ## Environment Setup
 
@@ -83,49 +82,17 @@ npm run dev
 
 ## Payload Setup
 
-Payload powers the website content, media library, and admin dashboard.
+Payload powers the website content, media library, contact form submissions, and admin dashboard.
 
 - Admin URL: `/admin`
 - API URL: `/api`
 - Preview links use `SITE_URL` to open the matching frontend page from the CMS
 
+All data — including contact form submissions — is stored in MongoDB via Payload.
+Contact submissions can be reviewed under **Administration > Contact Submissions** in the admin panel.
+
 Make sure `MONGODB_URI` points to a reachable MongoDB instance before running
 the app locally or deploying to Vercel.
-
-## Prisma Setup (Optional)
-
-Prisma has been added for database access and migrations.
-
-Only use this section if you still rely on Prisma for separate data workflows.
-
-1. Make sure your PostgreSQL server is running and that `DATABASE_URL` in `.env`
-points to it.
-
-2. Generate the Prisma client:
-
-```sh
-npm run prisma:generate
-```
-
-3. After you add your first model in `prisma/schema.prisma`, create a local
-migration:
-
-```sh
-npm run prisma:migrate -- --name init
-```
-
-Helpful commands:
-
-```sh
-npm run prisma:studio
-npm run prisma:push
-```
-
-Prisma should be used from server-side code only. This Next.js app should not
-connect directly to Postgres from the browser.
-
-Note: Prisma 7 reads the database connection from `prisma.config.ts`, which in
-this project loads `DATABASE_URL` from `.env`.
 
 ## How can I deploy this project?
 
@@ -136,10 +103,7 @@ Set these environment variables in Vercel:
 - `MONGODB_URI`
 - `PAYLOAD_SECRET`
 - `SITE_URL`
-
-If you still use Prisma in production, also set:
-
-- `DATABASE_URL`
+- `BLOB_READ_WRITE_TOKEN` (Vercel Blob — for media uploads)
 
 For MongoDB Atlas deployments:
 
